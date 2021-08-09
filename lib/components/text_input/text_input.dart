@@ -48,11 +48,7 @@ class TextInput extends StatelessWidget {
               labelStyle: TextStyle(
                   color: Color(0xff000000), fontWeight: FontWeight.bold),
               hintText: hintText,
-              // fillColor: Color(0xffD4D3E3),
               filled: false,
-              // border: OutlineInputBorder(
-              //   borderRadius: BorderRadius.circular(20),
-              // )
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide: BorderSide(color: Colors.transparent)),

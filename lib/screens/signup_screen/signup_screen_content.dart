@@ -16,6 +16,7 @@ class SignUpScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SizedBox(
           height: 30,
@@ -62,36 +63,35 @@ class SignUpScreenContent extends StatelessWidget {
         SizedBox(
           height: 15,
         ),
-        Hero(
-          tag: 'signUpBtn',
-          child: MainButton(
-            size: size,
-            btnText: 'Sign Up',
-            btnFunc: () {},
-          ),
+        // tag: 'signUpBtn',
+        MainButton(
+          tagName: 'signUpBtn',
+          size: size,
+          btnText: 'Sign Up',
+          btnFunc: () {},
         ),
         SizedBox(
           height: 25,
         ),
         Text(
           '  Already have an Account?',
-          // textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.grey,
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w600,
               fontSize: 16),
         ),
-        Hero(
-          tag: 'logInBtn',
-          child: SecondaryButton(
-            size: size,
-            btnText: 'Log In',
-            btnFunc: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LogInScreen()));
-            },
-          ),
+        SecondaryButton(
+          tagName: 'logInBtn',
+          size: size,
+          btnText: 'Log In',
+          btnFunc: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LogInScreen()));
+          },
+        ),
+        SizedBox(
+          height: 15,
         ),
       ],
     );

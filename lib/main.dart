@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_hp/screens/login_screen/login_screen.dart';
+import 'package:project_hp/screens/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Montserrat',
         primaryColor: Color(0xff159B80),
       ),
-      home: LogInScreen(),
+      home: SplashScreen(),
     );
   }
 }
