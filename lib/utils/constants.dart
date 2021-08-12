@@ -1,0 +1,4 @@
+enum Screens {
+  logInScreen,
+  signUpScreen,
+}

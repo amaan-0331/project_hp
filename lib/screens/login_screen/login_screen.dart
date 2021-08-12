@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/components/background_image.dart';
-import 'package:project_hp/screens/login_screen/login_screen_content.dart';
+import 'package:project_hp/screens/auth_screen/login_screen_content.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({Key? key}) : super(key: key);

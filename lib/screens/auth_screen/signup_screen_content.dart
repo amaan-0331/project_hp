@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/components/button/main_button.dart';
 import 'package:project_hp/components/button/secondary_button.dart';
-import 'package:project_hp/components/button/text_button.dart';
 import 'package:project_hp/components/text_input/text_input.dart';
-import 'package:project_hp/screens/signup_screen/signup_screen.dart';
+import 'package:project_hp/screens/auth_screen/auth_screen.dart';
+import 'package:project_hp/utils/constants.dart';
+import 'package:project_hp/utils/functions.dart';
 
-class LoginContent extends StatelessWidget {
-  const LoginContent({
+class SignUpContent extends StatelessWidget {
+  const SignUpContent({
     Key? key,
     required this.size,
   }) : super(key: key);
@@ -23,17 +24,17 @@ class LoginContent extends StatelessWidget {
           height: 30,
         ),
         Text(
-          'Hey Tourist!',
+          'Welcome to the Geo Tagger',
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w800,
               fontSize: 20),
         ),
         SizedBox(
-          height: 12,
+          height: 5,
         ),
         Text(
-          'Signin to Continue',
+          'Create an Account',
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w600,
@@ -43,11 +44,18 @@ class LoginContent extends StatelessWidget {
           height: 30,
         ),
         TextInput(
+          lblText: 'Full Name',
+          hintText: 'Johnny Someone',
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        TextInput(
           lblText: 'Email',
           hintText: 'someone@somewhere.com',
         ),
         SizedBox(
-          height: 19,
+          height: 15,
         ),
         TextInput(
           lblText: 'Password',
@@ -55,33 +63,34 @@ class LoginContent extends StatelessWidget {
           obscure: true,
         ),
         SizedBox(
-          height: 19,
+          height: 15,
         ),
+        // tag: 'signUpBtn',
         MainButton(
-          tagName: 'logInBtn',
+          tagName: 'signUpBtn',
           size: size,
-          btnText: 'Log In',
+          btnText: 'Sign Up',
+          btnWidth: size.width,
           btnFunc: () {},
         ),
         SizedBox(
           height: 25,
         ),
-        SecondaryTextButton(
-          btnFunc: () {
-            print('Clicked!!!');
-          },
-          btnText: 'Forgot Password?',
-        ),
-        SizedBox(
-          height: 25,
+        Text(
+          '  Already have an Account?',
+          style: TextStyle(
+              color: Colors.grey,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w600,
+              fontSize: 16),
         ),
         SecondaryButton(
-          tagName: 'signUpBtn',
+          tagName: 'logInBtn',
           size: size,
-          btnText: 'Sign Up',
+          btnText: 'Log In',
           btnFunc: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SignUpScreen()));
+            UtilFuncs.navigateTo(
+                context, AuthScreen(userSelection: Screens.logInScreen));
           },
         ),
         SizedBox(

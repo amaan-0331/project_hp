@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/components/button/main_button.dart';
 import 'package:project_hp/components/button/secondary_button.dart';
+import 'package:project_hp/components/button/text_button.dart';
 import 'package:project_hp/components/text_input/text_input.dart';
-import 'package:project_hp/screens/login_screen/login_screen.dart';
+import 'package:project_hp/screens/auth_screen/auth_screen.dart';
+import 'package:project_hp/utils/constants.dart';
+import 'package:project_hp/utils/functions.dart';
 
-class SignUpScreenContent extends StatelessWidget {
-  const SignUpScreenContent({
+class LoginContent extends StatefulWidget {
+  const LoginContent({
     Key? key,
     required this.size,
+    // required this.screenChanger,
   }) : super(key: key);
 
   final Size size;
+  // final Function() screenChanger;
 
+  @override
+  _LoginContentState createState() => _LoginContentState();
+}
+
+class _LoginContentState extends State<LoginContent> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,17 +32,17 @@ class SignUpScreenContent extends StatelessWidget {
           height: 30,
         ),
         Text(
-          'Welcome to the Geo Tagger',
+          'Hey Tourist!',
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w800,
               fontSize: 20),
         ),
         SizedBox(
-          height: 5,
+          height: 12,
         ),
         Text(
-          'Create an Account',
+          'Signin to Continue',
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w600,
@@ -42,18 +52,11 @@ class SignUpScreenContent extends StatelessWidget {
           height: 30,
         ),
         TextInput(
-          lblText: 'Full Name',
-          hintText: 'Johnny Someone',
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextInput(
           lblText: 'Email',
           hintText: 'someone@somewhere.com',
         ),
         SizedBox(
-          height: 15,
+          height: 19,
         ),
         TextInput(
           lblText: 'Password',
@@ -61,33 +64,37 @@ class SignUpScreenContent extends StatelessWidget {
           obscure: true,
         ),
         SizedBox(
-          height: 15,
+          height: 19,
         ),
-        // tag: 'signUpBtn',
         MainButton(
-          tagName: 'signUpBtn',
-          size: size,
-          btnText: 'Sign Up',
+          tagName: 'logInBtn',
+          size: widget.size,
+          btnText: 'Log In',
           btnFunc: () {},
+          btnWidth: widget.size.width,
         ),
         SizedBox(
           height: 25,
         ),
-        Text(
-          '  Already have an Account?',
-          style: TextStyle(
-              color: Colors.grey,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              fontSize: 16),
+        SecondaryTextButton(
+          btnFunc: () {
+            print('Clicked!!!');
+          },
+          btnText: 'Forgot Password?',
+        ),
+        SizedBox(
+          height: 25,
         ),
         SecondaryButton(
-          tagName: 'logInBtn',
-          size: size,
-          btnText: 'Log In',
+          tagName: 'signUpBtn',
+          size: widget.size,
+          btnText: 'Sign Up',
           btnFunc: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LogInScreen()));
+            UtilFuncs.navigateTo(
+                context, AuthScreen(userSelection: Screens.signUpScreen));
+            // screenChanger();
+            // UtilFuncs.navigateTo(
+            //     context, AuthScreen(userSelection: Screens.signUpScreen));
           },
         ),
         SizedBox(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/components/background_image.dart';
-import 'package:project_hp/screens/signup_screen/signup_screen_content.dart';
+import 'package:project_hp/screens/auth_screen/signup_screen_content.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class SignUpScreen extends StatelessWidget {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(35),
                           topRight: Radius.circular(35))),
-                  child: SignUpScreenContent(size: size),
+                  child: SignUpContent(size: size),
                 ),
               ],
             )

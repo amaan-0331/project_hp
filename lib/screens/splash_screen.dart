@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_hp/screens/login_screen/login_screen.dart';
+import 'package:project_hp/screens/auth_screen/welcome_screen.dart';
+import 'package:project_hp/utils/functions.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,8 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigateToHome() {
     Future.delayed(Duration(seconds: 5), () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LogInScreen()));
+      UtilFuncs.navigateTo(context, WelcomeScreen());
     });
   }
 

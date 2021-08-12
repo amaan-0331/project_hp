@@ -6,6 +6,7 @@ class MainButton extends StatelessWidget {
       required this.size,
       required this.btnText,
       required this.btnFunc,
+      required this.btnWidth,
       this.tagName = ''})
       : super(key: key);
 
@@ -13,6 +14,7 @@ class MainButton extends StatelessWidget {
   final String btnText;
   final Function() btnFunc;
   final Object tagName;
+  final double btnWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +30,8 @@ class MainButton extends StatelessWidget {
               fontSize: 18),
         ),
         style: ElevatedButton.styleFrom(
-          fixedSize: Size(size.width, 70),
+          fixedSize: Size(btnWidth, 70),
           primary: Color(0xff159B80),
-          padding:
-              EdgeInsets.symmetric(horizontal: size.width / 8, vertical: 23),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
