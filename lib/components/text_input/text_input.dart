@@ -17,7 +17,7 @@ class TextInput extends StatelessWidget {
   final int? inputLines;
   final Function? onChangedFunc;
   final TextEditingController? inputController;
-  final String Function(String)? validatorFunc;
+  final String? Function(String?)? validatorFunc;
   final TextInputType? inputType;
   final bool obscure;
 
@@ -35,7 +35,7 @@ class TextInput extends StatelessWidget {
           color: Color(0xffD4D3E3), borderRadius: BorderRadius.circular(20)),
       child: Center(
         child: TextFormField(
-          // validator: validatorFunc,
+          validator: validatorFunc,
           // onChanged: onChangedFunc,
           obscureText: obscure,
           keyboardType: inputType,
@@ -49,6 +49,12 @@ class TextInput extends StatelessWidget {
                   color: Color(0xff000000), fontWeight: FontWeight.bold),
               hintText: hintText,
               filled: false,
+              // focusedErrorBorder: OutlineInputBorder(
+              //     borderRadius: BorderRadius.circular(15),
+              //     borderSide: BorderSide(color: Colors.red)),
+              // errorBorder: OutlineInputBorder(
+              //     borderRadius: BorderRadius.circular(15),
+              //     borderSide: BorderSide(color: Colors.redAccent)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide: BorderSide(color: Colors.transparent)),

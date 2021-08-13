@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "706497036479",
+    "project_id": "project-hp-adstr",
+    "storage_bucket": "project-hp-adstr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706497036479:android:f560d8ffe49cf24aa5c60a",
+        "android_client_info": {
+          "package_name": "com.kukulas.project_hp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "706497036479-v8joq4dve3jakp3c32hfvqftalrfe7e5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnz6CwtYyFXS6MdpeyiTSCb3GPygIB40A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "706497036479-v8joq4dve3jakp3c32hfvqftalrfe7e5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
