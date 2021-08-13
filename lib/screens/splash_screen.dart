@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/screens/login_screen/login_screen.dart';
+import 'package:project_hp/utils/functions.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -12,13 +13,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    navigateToHome();
+    navigateToNext();
   }
 
-  void navigateToHome() {
+  void navigateToNext() {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LogInScreen()));
+      UtilFuncs.navigateTo(context, LogInScreen());
     });
   }
 

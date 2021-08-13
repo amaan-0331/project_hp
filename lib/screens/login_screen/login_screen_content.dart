@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hp/components/button/main_button.dart';
 import 'package:project_hp/components/button/secondary_button.dart';
 import 'package:project_hp/components/button/text_button.dart';
 import 'package:project_hp/components/text_input/text_input.dart';
+import 'package:project_hp/controllers/auth_controller.dart';
 import 'package:project_hp/screens/home_screen/home_screen.dart';
 import 'package:project_hp/screens/signup_screen/signup_screen.dart';
+import 'package:project_hp/utils/functions.dart';
 import 'package:project_hp/utils/validator.dart';
 
 class LoginContent extends StatefulWidget {
@@ -21,6 +24,11 @@ class LoginContent extends StatefulWidget {
 
 class _LoginContentState extends State<LoginContent> {
   final _loginFormKey = GlobalKey<FormState>();
+
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
+  bool isProcessing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +63,8 @@ class _LoginContentState extends State<LoginContent> {
           ),
           TextInput(
             lblText: 'Email',
+            inputController: _email,
+            inputType: TextInputType.emailAddress,
             hintText: 'someone@somewhere.com',
             validatorFunc: emailValidator(),
           ),
@@ -63,6 +73,7 @@ class _LoginContentState extends State<LoginContent> {
           ),
           TextInput(
             lblText: 'Password',
+            inputController: _password,
             obscure: true,
             validatorFunc: passwordValidator(),
           ),
@@ -73,18 +84,44 @@ class _LoginContentState extends State<LoginContent> {
             tagName: 'logInBtn',
             size: widget.size,
             btnText: 'Log In',
-            btnFunc: () {
+            btnFunc: () async {
               if (_loginFormKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Successful Login!')),
+                setState(() {
+                  isProcessing = true;
+                });
+                UserCredential? userCred =
+                    await AuthController(context).loginUser(
+                  _email.text,
+                  _password.text,
                 );
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                if (userCred!.user == null) {
+                  setState(() {
+                    isProcessing = false;
+                  });
+                }
+                // DialogUtils.snackMsg(context, 'Successful Login!');
+                DialogUtils.alertDialog(
+                  context,
+                  'Success!',
+                  'Login Successful! Enjoy Sharing the moment!',
+                  'ok',
+                  () {
+                    UtilFuncs.navigateTo(context, HomeScreen());
+                  },
+                );
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('Fill the necessary details properly!')),
+                setState(() {
+                  isProcessing = false;
+                });
+                DialogUtils.alertDialog(
+                  context,
+                  'Fill Details',
+                  'Fill all the Details',
+                  'Ok',
+                  () {},
                 );
+                DialogUtils.snackMsg(
+                    context, 'Fill the necessary details properly!');
               }
             },
           ),
@@ -105,8 +142,7 @@ class _LoginContentState extends State<LoginContent> {
             size: widget.size,
             btnText: 'Sign Up',
             btnFunc: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpScreen()));
+              UtilFuncs.navigateTo(context, SignUpScreen());
             },
           ),
           SizedBox(

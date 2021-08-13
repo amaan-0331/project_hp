@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class TextInput extends StatelessWidget {
   const TextInput(
       {Key? key,
-      this.hintText,
       required this.lblText,
+      this.hintText,
       this.inputLines,
       this.onChangedFunc,
       this.inputController,

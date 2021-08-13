@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hp/components/button/main_button.dart';
 import 'package:project_hp/components/button/secondary_button.dart';
 import 'package:project_hp/components/text_input/text_input.dart';
+import 'package:project_hp/controllers/auth_controller.dart';
 import 'package:project_hp/screens/home_screen/home_screen.dart';
 import 'package:project_hp/screens/login_screen/login_screen.dart';
+import 'package:project_hp/utils/functions.dart';
 import 'package:project_hp/utils/validator.dart';
 
 class SignUpScreenContent extends StatefulWidget {
@@ -20,6 +23,12 @@ class SignUpScreenContent extends StatefulWidget {
 
 class _SignUpScreenContentState extends State<SignUpScreenContent> {
   final _signupFormKey = GlobalKey<FormState>();
+
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+  TextEditingController _name = TextEditingController();
+
+  bool isProcessing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +64,16 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           TextInput(
             lblText: 'Full Name',
             hintText: 'Johnny Someone',
+            inputController: _name,
           ),
           SizedBox(
             height: 15,
           ),
           TextInput(
             lblText: 'Email',
+            inputType: TextInputType.emailAddress,
             hintText: 'someone@somewhere.com',
+            inputController: _email,
             validatorFunc: emailValidator(),
           ),
           SizedBox(
@@ -70,30 +82,52 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           TextInput(
             lblText: 'Password',
             obscure: true,
+            inputController: _password,
             validatorFunc: passwordValidator(),
           ),
           SizedBox(
             height: 15,
           ),
-          MainButton(
-            tagName: 'signUpBtn',
-            size: widget.size,
-            btnText: 'Sign Up',
-            btnFunc: () {
-              if (_signupFormKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Successful Login!')),
-                );
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('Fill the necessary details properly!')),
-                );
-              }
-            },
-          ),
+          isProcessing
+              ? UtilFuncs.loader
+              : MainButton(
+                  tagName: 'signUpBtn',
+                  size: widget.size,
+                  btnText: 'Sign Up',
+                  btnFunc: () async {
+                    if (_signupFormKey.currentState!.validate()) {
+                      setState(() {
+                        isProcessing = true;
+                      });
+                      UserCredential? userCred =
+                          await AuthController(context).registerUser(
+                        _email.text,
+                        _password.text,
+                        _name.text,
+                      );
+                      if (userCred!.user == null) {
+                        setState(() {
+                          isProcessing = false;
+                        });
+                      }
+                      DialogUtils.snackMsg(context, 'Successful Sign Up!');
+                      UtilFuncs.navigateTo(context, HomeScreen());
+                    } else {
+                      setState(() {
+                        isProcessing = false;
+                      });
+                      DialogUtils.alertDialog(
+                        context,
+                        'Fill Details',
+                        'Fill all the Details',
+                        'Ok',
+                        () {},
+                      );
+                      DialogUtils.snackMsg(
+                          context, 'Fill the necessary details properly!');
+                    }
+                  },
+                ),
           SizedBox(
             height: 25,
           ),
@@ -110,8 +144,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
             size: widget.size,
             btnText: 'Log In',
             btnFunc: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LogInScreen()));
+              UtilFuncs.navigateTo(context, LogInScreen());
             },
           ),
           SizedBox(
