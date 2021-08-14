@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class UtilFuncs {
-  static void navigateTo(BuildContext context, Widget screen) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
-  }
-
   static Widget loader = SpinKitWave(
     type: SpinKitWaveType.start,
     color: Color(0xff159B80),
@@ -13,7 +9,19 @@ class UtilFuncs {
   );
 }
 
-class DialogUtils {
+class NavigatorFuncs {
+  static void navigateTo(BuildContext context, Widget screen) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+  }
+
+  static void navigateToNoBack(BuildContext context, Widget screen) {
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => screen), (route) => false);
+  }
+}
+
+//class with Dialog Functions
+class DialogFuncs {
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackMsg(
       BuildContext context, String message) {
     return ScaffoldMessenger.of(context).showSnackBar(
@@ -26,6 +34,7 @@ class DialogUtils {
     String title,
     description,
     btnText,
+    bool needFunc,
     Function func,
   ) {
     return showDialog<String>(
@@ -35,9 +44,11 @@ class DialogUtils {
         content: Text(description),
         actions: <Widget>[
           TextButton(
-            onPressed: () async {
-              await func().then(() => Navigator.pop(context));
-            },
+            onPressed: needFunc
+                ? () async {
+                    await func().whenComplete(() => Navigator.pop(context));
+                  }
+                : () => Navigator.pop(context),
             child: Text(btnText),
           ),
         ],

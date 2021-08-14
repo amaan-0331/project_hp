@@ -94,33 +94,35 @@ class _LoginContentState extends State<LoginContent> {
                   _email.text,
                   _password.text,
                 );
-                if (userCred!.user == null) {
+                if (userCred!.user != null) {
                   setState(() {
                     isProcessing = false;
                   });
                 }
                 // DialogUtils.snackMsg(context, 'Successful Login!');
-                DialogUtils.alertDialog(
+                DialogFuncs.alertDialog(
                   context,
                   'Success!',
                   'Login Successful! Enjoy Sharing the moment!',
                   'ok',
+                  true,
                   () {
-                    UtilFuncs.navigateTo(context, HomeScreen());
+                    NavigatorFuncs.navigateToNoBack(context, HomeScreen());
                   },
                 );
               } else {
                 setState(() {
                   isProcessing = false;
                 });
-                DialogUtils.alertDialog(
+                DialogFuncs.alertDialog(
                   context,
                   'Fill Details',
                   'Fill all the Details',
                   'Ok',
+                  false,
                   () {},
                 );
-                DialogUtils.snackMsg(
+                DialogFuncs.snackMsg(
                     context, 'Fill the necessary details properly!');
               }
             },
@@ -142,7 +144,7 @@ class _LoginContentState extends State<LoginContent> {
             size: widget.size,
             btnText: 'Sign Up',
             btnFunc: () {
-              UtilFuncs.navigateTo(context, SignUpScreen());
+              NavigatorFuncs.navigateToNoBack(context, SignUpScreen());
             },
           ),
           SizedBox(

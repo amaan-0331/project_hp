@@ -110,20 +110,31 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                           isProcessing = false;
                         });
                       }
-                      DialogUtils.snackMsg(context, 'Successful Sign Up!');
-                      UtilFuncs.navigateTo(context, HomeScreen());
+                      DialogFuncs.snackMsg(context, 'Successful Sign Up!');
+                      DialogFuncs.alertDialog(
+                        context,
+                        'Success',
+                        'User Created Successfully!',
+                        'ok',
+                        true,
+                        () {
+                          NavigatorFuncs.navigateToNoBack(
+                              context, HomeScreen());
+                        },
+                      );
                     } else {
                       setState(() {
                         isProcessing = false;
                       });
-                      DialogUtils.alertDialog(
+                      DialogFuncs.alertDialog(
                         context,
                         'Fill Details',
                         'Fill all the Details',
                         'Ok',
+                        false,
                         () {},
                       );
-                      DialogUtils.snackMsg(
+                      DialogFuncs.snackMsg(
                           context, 'Fill the necessary details properly!');
                     }
                   },
@@ -144,7 +155,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
             size: widget.size,
             btnText: 'Log In',
             btnFunc: () {
-              UtilFuncs.navigateTo(context, LogInScreen());
+              NavigatorFuncs.navigateToNoBack(context, LogInScreen());
             },
           ),
           SizedBox(

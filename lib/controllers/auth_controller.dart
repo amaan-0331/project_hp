@@ -22,30 +22,33 @@ class AuthController {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        DialogUtils.alertDialog(
+        DialogFuncs.alertDialog(
           context,
           'Weak Password',
           'The password provided is too weOak.',
           'Ok',
+          false,
           () {},
         );
         print('\n\n The password provided is too weak.\n\n');
       } else if (e.code == 'email-already-in-use') {
-        DialogUtils.alertDialog(
+        DialogFuncs.alertDialog(
           context,
           'Used Email',
           'The account already exists for that email.',
           'Ok',
+          false,
           () {},
         );
         print('\n\nThe account already exists for that email.\n\n');
       }
     } catch (e) {
-      DialogUtils.alertDialog(
+      DialogFuncs.alertDialog(
         context,
         'Error',
         e,
         'Ok',
+        false,
         () {},
       );
       print(e);
@@ -65,30 +68,33 @@ class AuthController {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        DialogUtils.alertDialog(
+        DialogFuncs.alertDialog(
           context,
           'No User',
           'No user found for that email.',
           'Ok',
+          false,
           () {},
         );
         print('\n\n No user found for that email.\n\n');
       } else if (e.code == 'wrong-password') {
-        DialogUtils.alertDialog(
+        DialogFuncs.alertDialog(
           context,
           'Wrong password',
           'Wrong password provided for that user.',
           'Ok',
+          false,
           () {},
         );
         print('\n\n Wrong password provided for that user.\n\n');
       }
     } catch (e) {
-      DialogUtils.alertDialog(
+      DialogFuncs.alertDialog(
         context,
         'Error',
         e,
         'Ok',
+        false,
         () {},
       );
       print(e);
