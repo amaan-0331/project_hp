@@ -5,12 +5,14 @@ import 'package:project_hp/utils/functions.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
+  // var _nextScreen;
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
   //gettters
   bool get getLoading => _isLoading;
+  // Screens get getNextScreen => _nextScreen;
   TextEditingController get getNameController => _name;
   TextEditingController get getEmailController => _email;
   TextEditingController get getPasswordController => _password;
@@ -21,13 +23,20 @@ class AuthProvider extends ChangeNotifier {
     Logger().i('is loading value set to $_isLoading');
     notifyListeners();
   }
+
+  // void setNextScreen(Screens value) {
+  //   _nextScreen = value;
+  //   Logger().i('is NextScreen value set to $_nextScreen');
+  //   notifyListeners();
+  // }
 }
 
+// Provider For Login Screen
 class LoginProvider extends AuthProvider {
   final _loginFormKey = GlobalKey<FormState>();
 
   //getters
-  GlobalKey<FormState> get getFormKey => _loginFormKey;
+  GlobalKey<FormState> get getLoginFormKey => _loginFormKey;
 
   Future<void> startLoginProcess(BuildContext context) async {
     setLoading(true);
@@ -42,11 +51,12 @@ class LoginProvider extends AuthProvider {
   }
 }
 
+// Provider for Signup Screen
 class SignUpProvider extends AuthProvider {
   final _signupFormKey = GlobalKey<FormState>();
 
   //getters
-  GlobalKey<FormState> get getFormKey => _signupFormKey;
+  GlobalKey<FormState> get getSignUpFormKey => _signupFormKey;
 
   Future<void> startSignUpProcess(BuildContext context) async {
     setLoading(true);
@@ -59,6 +69,26 @@ class SignUpProvider extends AuthProvider {
       setLoading(false);
       DialogFuncs.alertDialog(context, 'Fill Details', 'Fill all the Details');
       DialogFuncs.snackMsg(context, 'Fill the necessary details properly!');
+    }
+  }
+}
+
+// Provider for Forgot password Screen
+class ForgotPasswordProvider extends AuthProvider {
+  final _forgotPasswordFormKey = GlobalKey<FormState>();
+
+  //getters
+  GlobalKey<FormState> get getForgotPasswordFormKey => _forgotPasswordFormKey;
+
+  Future<void> startForgotPasswordProcess(BuildContext context) async {
+    setLoading(true);
+
+    if (_forgotPasswordFormKey.currentState!.validate()) {
+      await AuthController(context).sendPasswordResetEmail(_email.text);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      DialogFuncs.alertDialog(context, 'Fill Details', 'Fill all the Details');
     }
   }
 }

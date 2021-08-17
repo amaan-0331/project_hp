@@ -13,6 +13,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => AuthProvider()),
       ChangeNotifierProvider(create: (context) => LoginProvider()),
       ChangeNotifierProvider(create: (context) => SignUpProvider()),
+      ChangeNotifierProvider(create: (context) => ForgotPasswordProvider()),
     ],
     child: MyApp(),
   ));

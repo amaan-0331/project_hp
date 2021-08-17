@@ -5,14 +5,14 @@ import 'package:project_hp/components/button/secondary_button.dart';
 import 'package:project_hp/components/button/text_button.dart';
 import 'package:project_hp/components/text_input/text_input.dart';
 import 'package:project_hp/providers/auth_providers/auth_provider.dart';
-import 'package:project_hp/screens/forgot_password/forgot_password.dart';
-import 'package:project_hp/screens/signup_screen/signup_screen.dart';
+import 'package:project_hp/screens/auth_screen/auth_screen.dart';
+import 'package:project_hp/utils/constants.dart';
 import 'package:project_hp/utils/functions.dart';
 import 'package:project_hp/utils/validator.dart';
 import 'package:provider/provider.dart';
 
-class LoginContent extends StatefulWidget {
-  const LoginContent({
+class LogInScreenContent extends StatefulWidget {
+  const LogInScreenContent({
     Key? key,
     required this.size,
   }) : super(key: key);
@@ -20,16 +20,16 @@ class LoginContent extends StatefulWidget {
   final Size size;
 
   @override
-  _LoginContentState createState() => _LoginContentState();
+  _LogInScreenContentState createState() => _LogInScreenContentState();
 }
 
-class _LoginContentState extends State<LoginContent> {
+class _LogInScreenContentState extends State<LogInScreenContent> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginProvider>(
       builder: (context, value, child) {
         return Form(
-          key: value.getFormKey,
+          key: value.getLoginFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -65,15 +65,16 @@ class _LoginContentState extends State<LoginContent> {
                   ? UtilFuncs.loader
                   : MainButton(
                       tagName: 'logInBtn',
-                      size: widget.size,
                       btnText: 'Log In',
+                      btnWidth: widget.size.width,
                       btnFunc: () => value.startLoginProcess(context),
                     ),
               TextOnlyButton(
                 tagName: 'forgotPasswordBtn',
                 btnFunc: () {
                   Logger().wtf('Dude forgot the password!!! ;))');
-                  NavigatorFuncs.navigateToNoBack(context, ForgotPassword());
+                  NavigatorFuncs.navigateToNoBack(context,
+                      AuthScreen(userSelection: Screens.forgotPasswordScreen));
                 },
                 btnText: 'Forgot Password?',
               ),
@@ -81,8 +82,8 @@ class _LoginContentState extends State<LoginContent> {
                   tagName: 'signUpBtn',
                   size: widget.size,
                   btnText: 'Sign Up',
-                  btnFunc: () =>
-                      NavigatorFuncs.navigateToNoBack(context, SignUpScreen())),
+                  btnFunc: () => NavigatorFuncs.navigateToNoBack(context,
+                      AuthScreen(userSelection: Screens.signUpScreen))),
               SizedBox(
                 height: 5,
               ),

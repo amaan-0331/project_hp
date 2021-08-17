@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_hp/screens/login_screen/login_screen.dart';
+import 'package:project_hp/screens/auth_screen/welcome_screen.dart';
+import 'package:project_hp/screens/home_screen/home_screen.dart';
 import 'package:project_hp/utils/functions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,9 +18,14 @@ class _SplashScreenState extends State<SplashScreen> {
     navigateToNext();
   }
 
-  void navigateToNext() {
-    Future.delayed(Duration(seconds: 2),
-        () => NavigatorFuncs.navigateToNoBack(context, LogInScreen()));
+  Future<void> navigateToNext() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool userStatus = prefs.containsKey('uid');
+    Future.delayed(
+        Duration(seconds: 2),
+        userStatus
+            ? () => NavigatorFuncs.navigateToNoBack(context, HomeScreen())
+            : () => NavigatorFuncs.navigateToNoBack(context, WelcomeScreen()));
   }
 
   @override
