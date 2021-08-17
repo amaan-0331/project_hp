@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
 
-class SecondaryTextButton extends StatelessWidget {
-  const SecondaryTextButton(
-      {Key? key, required this.btnText, required this.btnFunc})
-      : super(key: key);
+class TextOnlyButton extends StatelessWidget {
+  const TextOnlyButton({
+    Key? key,
+    required this.btnText,
+    required this.btnFunc,
+    this.tagName = '',
+  }) : super(key: key);
 
-  final String btnText;
+  final String btnText, tagName;
   final Function() btnFunc;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: btnFunc,
-      child: Center(
-        child: Text(
-          btnText,
-          // textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.grey,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              fontSize: 16),
-        ),
-      ),
-    );
+    return Hero(
+        tag: tagName,
+        child: Center(
+          child: TextButton(
+            child: Text(btnText),
+            onPressed: btnFunc,
+          ),
+        ));
   }
 }

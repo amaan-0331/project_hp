@@ -17,9 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToNext() {
-    Future.delayed(Duration(seconds: 2), () {
-      NavigatorFuncs.navigateToNoBack(context, LogInScreen());
-    });
+    Future.delayed(Duration(seconds: 2),
+        () => NavigatorFuncs.navigateToNoBack(context, LogInScreen()));
   }
 
   @override

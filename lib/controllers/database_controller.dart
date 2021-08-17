@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logger/logger.dart';
 
 class DatabaseController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -7,18 +8,17 @@ class DatabaseController {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   //Function to save user data
-  Future<void> saveUserData(
-    String name,
-    email,
-  ) {
+  Future<void> saveUserData(String name, email, uid) {
     // Call the user's CollectionReference to add a new user
     return users
-        .add({
+        .doc(uid)
+        .set({
+          'uid': uid,
           'name': name,
           'email': email,
         })
-        .then((value) => print("User Added"))
-        .catchError(
-            (error) => print("\n\n\n Failed to add user: $error \n\n\n\n"));
+        .then((value) => Logger().d("User Added"))
+        .catchError((error) =>
+            Logger().e("\n\n\n Failed to add user: $error \n\n\n\n"));
   }
 }

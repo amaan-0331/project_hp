@@ -33,9 +33,6 @@ class DialogFuncs {
     BuildContext context,
     String title,
     description,
-    btnText,
-    bool needFunc,
-    Function func,
   ) {
     return showDialog<String>(
       context: context,
@@ -44,12 +41,8 @@ class DialogFuncs {
         content: Text(description),
         actions: <Widget>[
           TextButton(
-            onPressed: needFunc
-                ? () async {
-                    await func().whenComplete(() => Navigator.pop(context));
-                  }
-                : () => Navigator.pop(context),
-            child: Text(btnText),
+            onPressed: () => Navigator.pop(context),
+            child: Text('Ok'),
           ),
         ],
       ),

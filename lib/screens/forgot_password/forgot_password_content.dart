@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:project_hp/components/button/main_button.dart';
 import 'package:project_hp/components/button/secondary_button.dart';
-import 'package:project_hp/components/button/text_button.dart';
 import 'package:project_hp/components/text_input/text_input.dart';
 import 'package:project_hp/controllers/auth_controller.dart';
-import 'package:project_hp/screens/forgot_password/forgot_password.dart';
-import 'package:project_hp/screens/signup_screen/signup_screen.dart';
+import 'package:project_hp/screens/login_screen/login_screen.dart';
 import 'package:project_hp/utils/functions.dart';
 import 'package:project_hp/utils/validator.dart';
 
-class LoginContent extends StatefulWidget {
-  const LoginContent({
+class ForgotPasswordContent extends StatefulWidget {
+  const ForgotPasswordContent({
     Key? key,
     required this.size,
   }) : super(key: key);
@@ -19,38 +16,46 @@ class LoginContent extends StatefulWidget {
   final Size size;
 
   @override
-  _LoginContentState createState() => _LoginContentState();
+  _ForgotPasswordContentState createState() => _ForgotPasswordContentState();
 }
 
-class _LoginContentState extends State<LoginContent> {
-  final _loginFormKey = GlobalKey<FormState>();
+class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
+  final _forgotPasswordFormKey = GlobalKey<FormState>();
 
   TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
 
   bool isProcessing = false;
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _loginFormKey,
+      key: _forgotPasswordFormKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-            height: 15,
+            height: 30,
           ),
           Text(
-            'Hey Tourist!',
-            style: Theme.of(context).textTheme.headline1,
-          ),
-          Text(
-            'Signin to Continue',
-            style: Theme.of(context).textTheme.subtitle1,
+            'Forgot Password?',
+            style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w800,
+                fontSize: 20),
           ),
           SizedBox(
-            height: 15,
+            height: 12,
+          ),
+          Text(
+            'Enter Email for Password Reset Link',
+            style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 16),
+          ),
+          SizedBox(
+            height: 30,
           ),
           TextInput(
             lblText: 'Email',
@@ -59,25 +64,22 @@ class _LoginContentState extends State<LoginContent> {
             hintText: 'someone@somewhere.com',
             validatorFunc: emailValidator(),
           ),
-          TextInput(
-            lblText: 'Password',
-            inputController: _password,
-            obscure: true,
-            validatorFunc: passwordValidator(),
+          SizedBox(
+            height: 19,
           ),
           isProcessing
               ? UtilFuncs.loader
               : MainButton(
-                  tagName: 'logInBtn',
+                  tagName: 'forgotPasswordBtn',
                   size: widget.size,
-                  btnText: 'Log In',
+                  btnText: 'Send Reset Email',
                   btnFunc: () async {
-                    if (_loginFormKey.currentState!.validate()) {
+                    if (_forgotPasswordFormKey.currentState!.validate()) {
                       setState(() {
                         isProcessing = true;
                       });
                       await AuthController(context)
-                          .loginUser(_email.text, _password.text);
+                          .sendPasswordResetEmail(_email.text);
                       setState(() {
                         isProcessing = false;
                       });
@@ -90,22 +92,20 @@ class _LoginContentState extends State<LoginContent> {
                     }
                   },
                 ),
-          TextOnlyButton(
-            tagName: 'forgotPasswordBtn',
-            btnFunc: () {
-              Logger().wtf('Dude forgot the password!!! ;))');
-              NavigatorFuncs.navigateToNoBack(context, ForgotPassword());
-            },
-            btnText: 'Forgot Password?',
+          SizedBox(
+            height: 25,
+          ),
+          SizedBox(
+            height: 25,
           ),
           SecondaryButton(
-              tagName: 'signUpBtn',
+              tagName: 'logInBtn',
               size: widget.size,
-              btnText: 'Sign Up',
+              btnText: 'Log In',
               btnFunc: () =>
-                  NavigatorFuncs.navigateToNoBack(context, SignUpScreen())),
+                  NavigatorFuncs.navigateToNoBack(context, LogInScreen())),
           SizedBox(
-            height: 5,
+            height: 15,
           ),
         ],
       ),

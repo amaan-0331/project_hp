@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TextInput extends StatelessWidget {
-  const TextInput(
-      {Key? key,
-      required this.lblText,
-      this.hintText,
-      this.inputLines,
-      this.onChangedFunc,
-      this.inputController,
-      this.inputType,
-      this.validatorFunc,
-      this.obscure = false})
-      : super(key: key);
+  const TextInput({
+    Key? key,
+    required this.lblText,
+    this.hintText,
+    this.inputLines,
+    this.onChangedFunc,
+    this.inputController,
+    this.inputType,
+    this.validatorFunc,
+    this.obscure = false,
+  }) : super(key: key);
   final String lblText;
   final String? hintText;
   final int? inputLines;
@@ -36,31 +36,15 @@ class TextInput extends StatelessWidget {
       child: Center(
         child: TextFormField(
           validator: validatorFunc,
-          // onChanged: onChangedFunc,
           obscureText: obscure,
           keyboardType: inputType,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: inputController,
           maxLines: _maxlines,
           decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 15),
-              labelText: lblText.toUpperCase(),
-              labelStyle: TextStyle(
-                  color: Color(0xff000000), fontWeight: FontWeight.bold),
-              hintText: hintText,
-              filled: false,
-              // focusedErrorBorder: OutlineInputBorder(
-              //     borderRadius: BorderRadius.circular(15),
-              //     borderSide: BorderSide(color: Colors.red)),
-              // errorBorder: OutlineInputBorder(
-              //     borderRadius: BorderRadius.circular(15),
-              //     borderSide: BorderSide(color: Colors.redAccent)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Colors.transparent)),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Colors.transparent))),
+            labelText: lblText.toUpperCase(),
+            hintText: hintText,
+          ),
         ),
       ),
     );
