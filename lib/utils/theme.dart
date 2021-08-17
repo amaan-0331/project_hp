@@ -43,17 +43,10 @@ final ThemeData mainTheme = ThemeData(
   textTheme: TextTheme(
     headline1: TextStyle(
         fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
-    headline2: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w800,
-    ),
-    headline3: TextStyle(
-      fontSize: 14,
-    ),
-    subtitle1: TextStyle(
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
-    ),
+    headline2: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+    headline3: TextStyle(fontSize: 14),
+    subtitle1: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+    caption: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
   ),
 
   //Text Input decoration theme
@@ -62,6 +55,7 @@ final ThemeData mainTheme = ThemeData(
     labelStyle:
         TextStyle(color: Color(0xff000000), fontWeight: FontWeight.bold),
     filled: false,
+    errorStyle: TextStyle(color: Colors.red, fontSize: 13),
     focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(color: Colors.transparent)),
