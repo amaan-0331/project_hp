@@ -34,9 +34,7 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                height: 15,
-              ),
+              Spacer(flex: 2),
               Text(
                 'Hey Tourist!',
                 style: Theme.of(context).textTheme.headline1,
@@ -45,9 +43,7 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
                 'Signin to Continue',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
-              SizedBox(
-                height: 15,
-              ),
+              Spacer(flex: 2),
               TextInput(
                 lblText: 'Email',
                 inputController: value.getEmailController,
@@ -55,12 +51,14 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
                 hintText: 'someone@somewhere.com',
                 validatorFunc: emailValidator(),
               ),
+              Spacer(),
               TextInput(
                 lblText: 'Password',
                 inputController: value.getPasswordController,
                 obscure: true,
                 validatorFunc: passwordValidator(),
               ),
+              Spacer(),
               value.getLoading
                   ? UtilFuncs.loader
                   : MainButton(
@@ -69,6 +67,7 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
                       btnWidth: widget.size.width,
                       btnFunc: () => value.startLoginProcess(context),
                     ),
+              Spacer(),
               TextOnlyButton(
                 tagName: 'forgotPasswordBtn',
                 btnFunc: () {
@@ -78,15 +77,14 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
                 },
                 btnText: 'Forgot Password?',
               ),
+              Spacer(),
               SecondaryButton(
                   tagName: 'signUpBtn',
                   size: widget.size,
                   btnText: 'Sign Up',
                   btnFunc: () => NavigatorFuncs.navigateToNoBack(context,
                       AuthScreen(userSelection: Screens.signUpScreen))),
-              SizedBox(
-                height: 5,
-              ),
+              Spacer()
             ],
           ),
         );

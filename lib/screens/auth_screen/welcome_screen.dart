@@ -26,24 +26,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: [
             Text(
               'Start Exploring the World',
-              style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w800,
-                  fontSize: 20),
+              style: Theme.of(context).textTheme.headline1,
             ),
-            SizedBox(
-              height: 15,
-            ),
+            Spacer(),
             Text(
               'Start Sharing the Moment',
-              style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16),
+              style: Theme.of(context).textTheme.subtitle1,
             ),
-            SizedBox(
-              height: 20,
-            ),
+            Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -61,9 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         AuthScreen(userSelection: Screens.signUpScreen))),
               ],
             ),
-            SizedBox(
-              height: 50,
-            ),
+            Spacer(),
           ],
         ),
       ),

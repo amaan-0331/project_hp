@@ -1,3 +1,4 @@
+//Validator for Emails
 String? Function(String?)? emailValidator() {
   return (value) {
     bool nicIsValid =
@@ -10,6 +11,7 @@ String? Function(String?)? emailValidator() {
   };
 }
 
+//Validator for password
 String? Function(String?)? passwordValidator() {
   return (value) {
     bool nicIsValid =

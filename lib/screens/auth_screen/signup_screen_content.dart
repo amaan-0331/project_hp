@@ -30,29 +30,20 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           key: value.getSignUpFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                height: 30,
-              ),
+              Spacer(flex: 3),
               Text('Welcome to the Geo Tagger',
                   style: Theme.of(context).textTheme.headline1),
-              SizedBox(
-                height: 5,
-              ),
               Text('Create an Account',
                   style: Theme.of(context).textTheme.subtitle1),
-              SizedBox(
-                height: 30,
-              ),
+              Spacer(flex: 2),
               TextInput(
                 lblText: 'Full Name',
                 hintText: 'Johnny Someone',
                 inputController: value.getNameController,
               ),
-              SizedBox(
-                height: 15,
-              ),
+              Spacer(),
               TextInput(
                 lblText: 'Email',
                 inputType: TextInputType.emailAddress,
@@ -60,18 +51,14 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                 inputController: value.getEmailController,
                 validatorFunc: emailValidator(),
               ),
-              SizedBox(
-                height: 15,
-              ),
+              Spacer(),
               TextInput(
                 lblText: 'Password',
                 obscure: true,
                 inputController: value.getPasswordController,
                 validatorFunc: passwordValidator(),
               ),
-              SizedBox(
-                height: 15,
-              ),
+              Spacer(),
               value.getLoading
                   ? UtilFuncs.loader
                   : MainButton(
@@ -80,11 +67,9 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                       btnWidth: widget.size.width,
                       btnFunc: () => value.startSignUpProcess(context),
                     ),
-              SizedBox(
-                height: 25,
-              ),
+              Spacer(flex: 2),
               Padding(
-                padding: EdgeInsets.only(left: 8),
+                padding: EdgeInsets.only(left: kDefaultPadding),
                 child: Text('Already have an Account?',
                     style: Theme.of(context).textTheme.caption),
               ),
@@ -94,9 +79,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                   btnText: 'Log In',
                   btnFunc: () => NavigatorFuncs.navigateToNoBack(
                       context, AuthScreen(userSelection: Screens.logInScreen))),
-              SizedBox(
-                height: 15,
-              ),
+              Spacer(),
             ],
           ),
         );

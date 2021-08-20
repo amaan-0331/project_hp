@@ -10,10 +10,12 @@ class UtilFuncs {
 }
 
 class NavigatorFuncs {
+  //Function to Navigate with push
   static void navigateTo(BuildContext context, Widget screen) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
+  //Function to Navigate with pushAndRemoveUntil
   static void navigateToNoBack(BuildContext context, Widget screen) {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => screen), (route) => false);
@@ -22,6 +24,7 @@ class NavigatorFuncs {
 
 //class with Dialog Functions
 class DialogFuncs {
+  //Snack message function
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackMsg(
       BuildContext context, String message) {
     return ScaffoldMessenger.of(context).showSnackBar(
@@ -29,6 +32,7 @@ class DialogFuncs {
     );
   }
 
+  //Alert Dialog Function
   static Future<String?> alertDialog(
     BuildContext context,
     String title,

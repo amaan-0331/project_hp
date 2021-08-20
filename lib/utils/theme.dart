@@ -8,8 +8,6 @@ final ThemeData mainTheme = ThemeData(
   //Elevated Button Theme Data
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      textStyle: TextStyle(
-          fontFamily: 'Montserrat', fontWeight: FontWeight.w800, fontSize: 18),
       primary: Color(0xff159B80),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
@@ -20,8 +18,6 @@ final ThemeData mainTheme = ThemeData(
   //Outlined Button Theme data
   outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-    textStyle: TextStyle(
-        fontFamily: 'Montserrat', fontWeight: FontWeight.w800, fontSize: 18),
     primary: Color(0xff159B80),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20.0),
@@ -33,8 +29,6 @@ final ThemeData mainTheme = ThemeData(
     style: TextButton.styleFrom(
       primary: Colors.grey,
       padding: EdgeInsets.all(5),
-      textStyle: TextStyle(
-          fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: 16),
     ),
   ),
 
@@ -47,6 +41,7 @@ final ThemeData mainTheme = ThemeData(
     headline3: TextStyle(fontSize: 14),
     subtitle1: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
     caption: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+    button: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
   ),
 
   //Text Input decoration theme

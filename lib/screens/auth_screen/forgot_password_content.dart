@@ -32,19 +32,12 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                height: 30,
-              ),
+              Spacer(flex: 2),
               Text('Forgot Password?',
                   style: Theme.of(context).textTheme.headline1),
-              SizedBox(
-                height: 12,
-              ),
               Text('Enter Email for Password Reset Link',
                   style: Theme.of(context).textTheme.subtitle1),
-              SizedBox(
-                height: 30,
-              ),
+              Spacer(flex: 2),
               TextInput(
                 lblText: 'Email',
                 inputController: value.getEmailController,
@@ -52,9 +45,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                 hintText: 'someone@somewhere.com',
                 validatorFunc: emailValidator(),
               ),
-              SizedBox(
-                height: 19,
-              ),
+              Spacer(),
               value.getLoading
                   ? UtilFuncs.loader
                   : MainButton(
@@ -63,21 +54,14 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                       btnText: 'Send Reset Email',
                       btnFunc: () => value.startForgotPasswordProcess(context),
                     ),
-              SizedBox(
-                height: 25,
-              ),
-              SizedBox(
-                height: 25,
-              ),
+              Spacer(flex: 2),
               SecondaryButton(
                   tagName: 'logInBtn',
                   size: widget.size,
                   btnText: 'Log In',
                   btnFunc: () => NavigatorFuncs.navigateToNoBack(
                       context, AuthScreen(userSelection: Screens.logInScreen))),
-              SizedBox(
-                height: 15,
-              ),
+              Spacer(),
             ],
           ),
         );

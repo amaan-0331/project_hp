@@ -22,10 +22,6 @@ class _AuthScreenState extends State<AuthScreen> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      // floatingActionButton: ElevatedButton(
-      //     child: Icon(Icons.dangerous),
-      //     onPressed: () => NavigatorFuncs.navigateToNoBack(
-      //         context, AuthScreen(userSelection: Screens.signUpScreen))),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -66,7 +62,7 @@ class _AuthFieldsState extends State<AuthFields> {
               : widget.size.height / 3,
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 25),
+          padding: EdgeInsets.symmetric(horizontal: 23),
           width: widget.size.width,
           height: (nextScreen == Screens.signUpScreen)
               ? widget.size.height * 3 / 4
