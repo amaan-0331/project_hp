@@ -38,13 +38,13 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
               Text('Create an Account',
                   style: Theme.of(context).textTheme.subtitle1),
               Spacer(flex: 2),
-              TextInput(
+              FormTextInput(
                 lblText: 'Full Name',
                 hintText: 'Johnny Someone',
                 inputController: value.getNameController,
               ),
               Spacer(),
-              TextInput(
+              FormTextInput(
                 lblText: 'Email',
                 inputType: TextInputType.emailAddress,
                 hintText: 'someone@somewhere.com',
@@ -52,7 +52,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                 validatorFunc: emailValidator(),
               ),
               Spacer(),
-              TextInput(
+              FormTextInput(
                 lblText: 'Password',
                 obscure: true,
                 inputController: value.getPasswordController,

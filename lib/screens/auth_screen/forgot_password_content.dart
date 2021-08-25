@@ -38,7 +38,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
               Text('Enter Email for Password Reset Link',
                   style: Theme.of(context).textTheme.subtitle1),
               Spacer(flex: 2),
-              TextInput(
+              FormTextInput(
                 lblText: 'Email',
                 inputController: value.getEmailController,
                 inputType: TextInputType.emailAddress,

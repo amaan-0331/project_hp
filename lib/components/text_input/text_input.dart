@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TextInput extends StatelessWidget {
-  const TextInput({
+class FormTextInput extends StatelessWidget {
+  const FormTextInput({
     Key? key,
     required this.lblText,
     this.hintText,
@@ -46,6 +46,46 @@ class TextInput extends StatelessWidget {
             hintText: hintText,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class NormalTextInput extends StatelessWidget {
+  const NormalTextInput({
+    Key? key,
+    required this.lblText,
+    this.hintText,
+    this.inputLines,
+    this.onChangedFunc,
+    this.inputController,
+    this.inputType,
+    this.obscure = false,
+  }) : super(key: key);
+  final String lblText;
+  final String? hintText;
+  final int? inputLines;
+  final Function? onChangedFunc;
+  final TextEditingController? inputController;
+  final TextInputType? inputType;
+  final bool obscure;
+
+  @override
+  Widget build(BuildContext context) {
+    int? _maxlines;
+    if (inputLines == null) {
+      _maxlines = 1;
+    } else {
+      _maxlines = inputLines;
+    }
+    return TextField(
+      obscureText: obscure,
+      keyboardType: inputType,
+      controller: inputController,
+      maxLines: _maxlines,
+      decoration: InputDecoration(
+        labelText: lblText.toUpperCase(),
+        hintText: hintText,
       ),
     );
   }

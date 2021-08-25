@@ -44,7 +44,7 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               Spacer(flex: 2),
-              TextInput(
+              FormTextInput(
                 lblText: 'Email',
                 inputController: value.getEmailController,
                 inputType: TextInputType.emailAddress,
@@ -52,7 +52,7 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
                 validatorFunc: emailValidator(),
               ),
               Spacer(),
-              TextInput(
+              FormTextInput(
                 lblText: 'Password',
                 inputController: value.getPasswordController,
                 obscure: true,
