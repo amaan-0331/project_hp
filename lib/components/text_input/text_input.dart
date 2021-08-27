@@ -78,14 +78,21 @@ class NormalTextInput extends StatelessWidget {
     } else {
       _maxlines = inputLines;
     }
-    return TextField(
-      obscureText: obscure,
-      keyboardType: inputType,
-      controller: inputController,
-      maxLines: _maxlines,
-      decoration: InputDecoration(
-        labelText: lblText.toUpperCase(),
-        hintText: hintText,
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+          color: Color(0xffD4D3E3), borderRadius: BorderRadius.circular(20)),
+      child: Center(
+        child: TextField(
+          obscureText: obscure,
+          keyboardType: inputType,
+          controller: inputController,
+          maxLines: _maxlines,
+          decoration: InputDecoration(
+            labelText: lblText.toUpperCase(),
+            hintText: hintText,
+          ),
+        ),
       ),
     );
   }

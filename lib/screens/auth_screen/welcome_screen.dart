@@ -24,6 +24,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //TODO: check what's wrong
+            // Spacer(flex: 3),
             Text(
               'Start Exploring the World',
               style: Theme.of(context).textTheme.headline1,

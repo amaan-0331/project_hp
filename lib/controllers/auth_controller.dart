@@ -51,10 +51,7 @@ class AuthController {
   }
 
   //function to login user in firebase
-  Future<void> loginUser(
-    String email,
-    password,
-  ) async {
+  Future<void> loginUser(String email, password) async {
     try {
       //Logics
       UserCredential userCredential = await FirebaseAuth.instance
