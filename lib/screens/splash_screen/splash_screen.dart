@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:project_hp/providers/map_provider/location_provider.dart';
 import 'package:project_hp/screens/auth_screen/welcome_screen.dart';
-import 'package:project_hp/screens/home_screen/home_screen.dart';
+import 'package:project_hp/screens/screen_navigator/bottom_navigator.dart';
 import 'package:project_hp/utils/functions.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       Duration(seconds: 1),
       userStatus
-          ? () => NavigatorFuncs.navigateToNoBack(context, HomeScreen())
+          ? () => NavigatorFuncs.navigateToNoBack(context, BottomNavigator())
           : () => NavigatorFuncs.navigateToNoBack(context, WelcomeScreen()),
     );
   }
@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .determinePosition(context);
     Logger().i('iwara una');
 
-    NavigatorFuncs.navigateToNoBack(context, HomeScreen());
+    NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
   }
 
   @override

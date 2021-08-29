@@ -4,4 +4,4 @@ enum Screens {
   forgotPasswordScreen,
 }
 
-const double kDefaultPadding = 10;
+const double kDefaultPadding = 15;

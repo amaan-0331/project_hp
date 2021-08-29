@@ -47,7 +47,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
               ),
               Spacer(),
               value.getLoading
-                  ? UtilFuncs.loader
+                  ? UtilFuncs.buttonLoader
                   : MainButton(
                       tagName: 'forgotPasswordBtn',
                       btnWidth: widget.size.width,

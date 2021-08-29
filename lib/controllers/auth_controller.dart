@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:project_hp/controllers/database_controller.dart';
 import 'package:project_hp/screens/auth_screen/auth_screen.dart';
-import 'package:project_hp/screens/home_screen/home_screen.dart';
+import 'package:project_hp/screens/screen_navigator/bottom_navigator.dart';
 import 'package:project_hp/utils/constants.dart';
 import 'package:project_hp/utils/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +13,7 @@ class AuthController {
   AuthController(this.context);
 
   // Firebase Auth Instance
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //function to create user in firebase
   Future<void> registerUser(String email, password, name) async {
@@ -65,7 +65,7 @@ class AuthController {
           context, 'Success!', 'Login Successful! Enjoy Sharing the moment!');
 
       //Navigating...
-      NavigatorFuncs.navigateToNoBack(context, HomeScreen());
+      NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         DialogFuncs.alertDialog(
@@ -85,11 +85,40 @@ class AuthController {
     }
   }
 
-//Function to send password reset email
+  //Function to Anonymous SignIn
+  Future<void> signInAnonymous() async {
+    try {
+      //Logics
+      await FirebaseAuth.instance.signInAnonymously();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('uid', 'anonymous');
+
+      //Letting the user know
+      Logger().d('\n\n Anonymously LoggedIn! \n\n');
+      await DialogFuncs.alertDialog(context, 'Sneaky😜!',
+          'Logged In without Authentication! Enjoy Sharing the moment!');
+
+      //Navigating...
+      NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'operation-not-allowed') {
+        DialogFuncs.alertDialog(context, 'Not Allowed', e.message);
+        Logger().e('\n\n ${e.message} \n\n');
+      } else {
+        DialogFuncs.alertDialog(context, 'Error', e.message);
+        Logger().e(e.message);
+      }
+    } catch (e) {
+      DialogFuncs.alertDialog(context, 'Error', e.toString());
+      Logger().e(e.toString());
+    }
+  }
+
+  //Function to send password reset email
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       //logic
-      await auth.sendPasswordResetEmail(email: email);
+      await _auth.sendPasswordResetEmail(email: email);
 
       //Letting the user know
       DialogFuncs.alertDialog(

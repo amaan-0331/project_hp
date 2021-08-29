@@ -3,8 +3,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:project_hp/components/text_input/text_input.dart';
 
 class UtilFuncs {
-  static Widget loader = SpinKitWave(
+  //Loader animation when button loading
+  static Widget buttonLoader = SpinKitWave(
     type: SpinKitWaveType.start,
+    color: Color(0xff159B80),
+    // size: 50.0,
+  );
+
+  //Loader animation when page loading
+  static Widget pageLoader = SpinKitChasingDots(
     color: Color(0xff159B80),
     // size: 50.0,
   );

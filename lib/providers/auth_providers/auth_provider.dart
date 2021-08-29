@@ -24,11 +24,11 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void setNextScreen(Screens value) {
-  //   _nextScreen = value;
-  //   Logger().i('is NextScreen value set to $_nextScreen');
-  //   notifyListeners();
-  // }
+  Future<void> startAnonymousLogin(BuildContext context) async {
+    setLoading(true);
+    await AuthController(context).signInAnonymous();
+    setLoading(false);
+  }
 }
 
 // Provider For Login Screen

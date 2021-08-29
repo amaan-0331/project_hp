@@ -60,7 +60,7 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
               ),
               Spacer(),
               value.getLoading
-                  ? UtilFuncs.loader
+                  ? UtilFuncs.buttonLoader
                   : MainButton(
                       tagName: 'logInBtn',
                       btnText: 'Log In',

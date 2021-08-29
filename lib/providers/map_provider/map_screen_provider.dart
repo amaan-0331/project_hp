@@ -30,6 +30,7 @@ class MapScreenProvider extends ChangeNotifier {
         currentLoc.longitude,
       ),
       zoom: 17,
+      tilt: 60,
     );
   }
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/components/button/main_button.dart';
+import 'package:project_hp/components/button/secondary_button.dart';
+import 'package:project_hp/providers/auth_providers/auth_provider.dart';
 import 'package:project_hp/screens/auth_screen/auth_screen.dart';
 import 'package:project_hp/utils/constants.dart';
 import 'package:project_hp/utils/functions.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({Key? key}) : super(key: key);
@@ -24,18 +27,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //TODO: check what's wrong
-            // Spacer(flex: 3),
             Text(
               'Start Exploring the World',
               style: Theme.of(context).textTheme.headline1,
             ),
-            Spacer(),
+            SizedBox(height: kDefaultPadding),
             Text(
               'Start Sharing the Moment',
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            Spacer(),
+            SizedBox(height: kDefaultPadding),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -53,7 +54,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         AuthScreen(userSelection: Screens.signUpScreen))),
               ],
             ),
-            Spacer(),
+            SizedBox(height: kDefaultPadding),
+            Consumer<AuthProvider>(
+              builder: (context, value, child) {
+                return value.getLoading
+                    ? UtilFuncs.buttonLoader
+                    : SecondaryButton(
+                        size: size,
+                        btnText: 'Go Anonymous',
+                        btnFunc: () =>
+                            Provider.of<AuthProvider>(context, listen: false)
+                                .startAnonymousLogin(context),
+                      );
+              },
+            ),
+            SizedBox(height: kDefaultPadding * 2.5),
           ],
         ),
       ),

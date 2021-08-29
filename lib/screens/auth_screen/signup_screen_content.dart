@@ -60,7 +60,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
               ),
               Spacer(),
               value.getLoading
-                  ? UtilFuncs.loader
+                  ? UtilFuncs.buttonLoader
                   : MainButton(
                       tagName: 'signUpBtn',
                       btnText: 'Sign Up',

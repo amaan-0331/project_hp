@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project_hp/providers/auth_providers/auth_provider.dart';
 import 'package:project_hp/providers/map_provider/location_provider.dart';
 import 'package:project_hp/providers/map_provider/map_screen_provider.dart';
-import 'package:project_hp/screens/splash_screen.dart';
+import 'package:project_hp/providers/navigator_provider/navigator_provider.dart';
+import 'package:project_hp/screens/splash_screen/splash_screen.dart';
 import 'package:project_hp/utils/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ MultiProvider allProviders() {
       ChangeNotifierProvider(create: (context) => ForgotPasswordProvider()),
       ChangeNotifierProvider(create: (context) => LocationProvider()),
       ChangeNotifierProvider(create: (context) => MapScreenProvider()),
+      ChangeNotifierProvider(create: (context) => NavigatorProvider()),
     ],
     child: MyApp(),
   );
