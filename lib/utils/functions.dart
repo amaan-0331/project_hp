@@ -123,7 +123,7 @@ class DialogFuncs {
     );
   }
 
-  //Alert Dialog Function with two additional functions
+  //Alert Dialog Function with textfields
   static Future<String?> alertDialogWithTextFields(
     BuildContext context,
     String title,
@@ -141,7 +141,7 @@ class DialogFuncs {
         contentPadding: EdgeInsets.symmetric(horizontal: 25),
         title: Text(title),
         content: Container(
-          height: 200,
+          height: 250,
           child: Column(
             children: [
               Text(description),

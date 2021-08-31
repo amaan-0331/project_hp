@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -39,8 +40,22 @@ class MapScreenProvider extends ChangeNotifier {
     DatabaseController().saveMarkerData(markerModel);
   }
 
+  //getting markers from database
+  void addMarkersFromDatabase(DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+    MarkerModel model = MarkerModel(
+        markerId: document.id,
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        infoTitle: data['infoTitle'],
+        infoSnippet: data['infoSnippet']);
+    addMarkerToSet(model);
+    notifyListeners();
+    Logger().i('New Location ${document.id} Created!');
+  }
+
   //save user selection --> long press function
-  Future<void> saveUserMarker(LatLng userPosition, BuildContext context) async {
+  Future<void> saveMarker(LatLng userPosition, BuildContext context) async {
     getTitleController.clear();
     getSnippetController.clear();
     await DialogFuncs.alertDialogWithTextFields(
@@ -50,7 +65,6 @@ class MapScreenProvider extends ChangeNotifier {
       getTitleController,
       getSnippetController,
     );
-
     MarkerModel newLocModel = MarkerModel(
       markerId: "${userPosition.latitude}${userPosition.longitude}",
       latitude: userPosition.latitude,
@@ -58,20 +72,23 @@ class MapScreenProvider extends ChangeNotifier {
       infoTitle: getTitleController.text,
       infoSnippet: getSnippetController.text,
     );
-
-    Marker newLoc = Marker(
-        markerId: MarkerId(newLocModel.markerId),
-        position: userPosition,
-        icon: BitmapDescriptor.defaultMarker,
-        infoWindow: InfoWindow(
-          title: newLocModel.infoTitle,
-          snippet: newLocModel.infoSnippet,
-        ));
     Logger().i('New Location Created!');
+    addMarkerToSet(newLocModel);
     saveMarkerInDatabase(newLocModel);
-    getMarkerSet.add(newLoc);
     notifyListeners();
     Logger().i('New Location Added!');
+  }
+
+  //add marker to the set
+  void addMarkerToSet(MarkerModel model) {
+    Marker loc = Marker(
+        markerId: MarkerId(model.markerId),
+        position: LatLng(model.latitude, model.longitude),
+        infoWindow: InfoWindow(
+          title: model.infoTitle,
+          snippet: model.infoSnippet,
+        ));
+    getMarkerSet.add(loc);
   }
 
   //removing all markers
@@ -79,4 +96,19 @@ class MapScreenProvider extends ChangeNotifier {
     getMarkerSet.clear();
     notifyListeners();
   }
+
+  //testing code //////////
+  // Stream tetstts = Stream();
+  Future<Marker> testStream(DocumentSnapshot document) async {
+    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+    MarkerModel model = MarkerModel(
+        markerId: document.id,
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        infoTitle: data['title'],
+        infoSnippet: data['snippet']);
+    Marker test1 = Marker(markerId: MarkerId(model.markerId));
+    return test1;
+  }
+  //testing code //////////
 }

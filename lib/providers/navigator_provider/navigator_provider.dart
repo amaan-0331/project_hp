@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hp/screens/account_screen/account_screen.dart';
 import 'package:project_hp/screens/map_screen/map_screen.dart';
-import 'package:project_hp/screens/map_screen/update_screen.dart';
+import 'package:project_hp/screens/map_screen/home_screen.dart';
 
 class NavigatorProvider extends ChangeNotifier {
   int _currentScreenIndex = 0;
   static List<Widget> _screenOptions = [
-    MapScreen(),
     UpdateScreen(),
+    MapScreen(),
     AccountScreen(),
   ];
 
@@ -34,10 +34,9 @@ class NavigatorProvider extends ChangeNotifier {
       unselectedItemColor: Colors.black.withOpacity(0.5),
       type: BottomNavigationBarType.shifting,
       items: [
+        BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
         BottomNavigationBarItem(
-            label: 'Map Screen', icon: Icon(Icons.location_pin)),
-        BottomNavigationBarItem(
-            label: 'Updates Screen', icon: Icon(Icons.update)),
+            label: 'Explorer', icon: Icon(Icons.location_pin)),
         BottomNavigationBarItem(
             label: 'User Account', icon: Icon(Icons.person)),
       ],

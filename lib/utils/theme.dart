@@ -35,6 +35,8 @@ final ThemeData mainTheme = ThemeData(
   //Text Theme
   fontFamily: 'Montserrat',
   textTheme: TextTheme(
+    headline6: TextStyle(
+        fontSize: 30, fontWeight: FontWeight.w800, color: Colors.black),
     headline1: TextStyle(
         fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
     headline2: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_hp/components/background_image.dart';
+import 'package:project_hp/screens/auth_screen/components/background_image.dart';
 import 'package:project_hp/screens/auth_screen/forgot_password_content.dart';
 import 'package:project_hp/screens/auth_screen/login_screen_content.dart';
 import 'package:project_hp/screens/auth_screen/signup_screen_content.dart';

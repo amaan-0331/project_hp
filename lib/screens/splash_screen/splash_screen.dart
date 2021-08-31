@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:project_hp/providers/map_provider/location_provider.dart';
 import 'package:project_hp/screens/auth_screen/welcome_screen.dart';
+import 'package:project_hp/screens/map_screen/map_screen.dart';
 import 'package:project_hp/screens/screen_navigator/bottom_navigator.dart';
 import 'package:project_hp/utils/functions.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .determinePosition(context);
     Logger().i('iwara una');
 
-    NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
+    NavigatorFuncs.navigateToNoBack(context, MapScreen());
   }
 
   @override
