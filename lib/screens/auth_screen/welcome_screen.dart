@@ -61,7 +61,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ? UtilFuncs.buttonLoader
                     : SecondaryButton(
                         size: size,
-                        btnText: 'Go Anonymous',
+                        btnText: 'Explore',
                         btnFunc: () =>
                             Provider.of<AuthProvider>(context, listen: false)
                                 .startAnonymousLogin(context),

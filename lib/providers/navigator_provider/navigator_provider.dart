@@ -36,7 +36,7 @@ class NavigatorProvider extends ChangeNotifier {
       items: [
         BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
         BottomNavigationBarItem(
-            label: 'Explorer', icon: Icon(Icons.location_pin)),
+            label: 'Explore', icon: Icon(Icons.location_pin)),
         BottomNavigationBarItem(
             label: 'User Account', icon: Icon(Icons.person)),
       ],

@@ -5,3 +5,4 @@ enum Screens {
 }
 
 const double kDefaultPadding = 15;
+const String kAnonymous = 'anonymous';

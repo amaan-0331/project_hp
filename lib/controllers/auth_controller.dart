@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:project_hp/controllers/database_controller.dart';
 import 'package:project_hp/screens/auth_screen/auth_screen.dart';
+import 'package:project_hp/screens/auth_screen/welcome_screen.dart';
 import 'package:project_hp/screens/screen_navigator/bottom_navigator.dart';
 import 'package:project_hp/utils/constants.dart';
 import 'package:project_hp/utils/functions.dart';
@@ -23,14 +24,14 @@ class AuthController {
       await DatabaseController()
           .saveUserData(name, email, userCredential.user!.uid);
 
+      //Navigating...
+      NavigatorFuncs.navigateToNoBack(
+          context, AuthScreen(userSelection: Screens.logInScreen));
+
       //Letting the user know
       await DialogFuncs.alertDialog(
           context, 'Success', 'User Created Successfully, You can Login Now!');
       Logger().d('\n\n ${userCredential.user!.uid} - User Created! \n\n');
-
-      //Navigating...
-      NavigatorFuncs.navigateToNoBack(
-          context, AuthScreen(userSelection: Screens.logInScreen));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         DialogFuncs.alertDialog(
@@ -59,13 +60,14 @@ class AuthController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('uid', userCredential.user!.uid);
 
-      //Letting the user know
       Logger().d('\n\n ${userCredential.user!.uid} - User Logged In! \n\n');
-      await DialogFuncs.alertDialog(
-          context, 'Success!', 'Login Successful! Enjoy Sharing the moment!');
 
       //Navigating...
       NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
+
+      //Letting the user know
+      DialogFuncs.alertDialog(
+          context, 'Success!', 'Login Successful! Enjoy Sharing the moment!');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         DialogFuncs.alertDialog(
@@ -91,15 +93,15 @@ class AuthController {
       //Logics
       await FirebaseAuth.instance.signInAnonymously();
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('uid', 'anonymous');
+      prefs.setString('uid', kAnonymous);
+
+      //Navigating...
+      NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
 
       //Letting the user know
       Logger().d('\n\n Anonymously LoggedIn! \n\n');
       await DialogFuncs.alertDialog(context, 'Sneaky😜!',
           'Logged In without Authentication! Enjoy Sharing the moment!');
-
-      //Navigating...
-      NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'operation-not-allowed') {
         DialogFuncs.alertDialog(context, 'Not Allowed', e.message);
@@ -143,12 +145,14 @@ class AuthController {
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('uid');
-    await DialogFuncs.alertDialog(
-        context, 'Success!', 'LogOut Successful! Sad to see you leave!');
+    String? uid = prefs.getString('uid');
+    prefs.setString('uid', kAnonymous);
+    if (uid != kAnonymous) {
+      await DialogFuncs.alertDialog(
+          context, 'Success!', 'Log Out Successful! Sad to see you leave!');
+    }
 
     //Navigating...
-    NavigatorFuncs.navigateToNoBack(
-        context, AuthScreen(userSelection: Screens.logInScreen));
+    NavigatorFuncs.navigateToNoBack(context, WelcomeScreen());
   }
 }

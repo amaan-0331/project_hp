@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project_hp/controllers/database_controller.dart';
 import 'package:project_hp/providers/map_provider/location_provider.dart';
 import 'package:project_hp/providers/map_provider/map_screen_provider.dart';
+import 'package:project_hp/screens/map_screen/components/temp_screen.dart';
 import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
@@ -20,18 +23,39 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     Position _currentLoc =
         Provider.of<LocationProvider>(context).getCurrentLocation;
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Consumer<MapScreenProvider>(
         builder: (context, value, child) {
-          return GoogleMap(
-            markers: value.getMarkerSet,
-            padding: EdgeInsets.all(35),
-            mapType: MapType.normal,
-            onLongPress: (userPosition) async =>
-                await value.saveMarker(userPosition, context),
-            initialCameraPosition: value.setCurrentCamPosition(_currentLoc),
-            onMapCreated: (GoogleMapController controller) =>
-                _controller.complete(controller),
+          return StreamBuilder<QuerySnapshot>(
+            stream: DatabaseController().markerStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return TempScreen(size: size, message: 'Something went wrong');
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return TempScreen(size: size, message: "Loading");
+              }
+
+              snapshot.data!.docs.forEach(
+                (DocumentSnapshot document) {
+                  DatabaseController()
+                      .processDataFromStreambuilder(context, document);
+                },
+              );
+
+              return GoogleMap(
+                markers: value.getMarkerSet,
+                padding: EdgeInsets.all(35),
+                mapType: MapType.normal,
+                onLongPress: (userPosition) async =>
+                    await value.saveMarker(userPosition, context),
+                initialCameraPosition: value.setCurrentCamPosition(_currentLoc),
+                onMapCreated: (GoogleMapController controller) =>
+                    _controller.complete(controller),
+              );
+            },
           );
         },
       ),
