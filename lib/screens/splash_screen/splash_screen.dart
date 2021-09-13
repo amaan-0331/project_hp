@@ -51,16 +51,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        child: Center(
-          child: Text(
-            'ApiYamu',
-            style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w800,
-                fontSize: 20),
-          ),
+        width: size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              height: size.height / 4,
+            ),
+            SizedBox(height: size.height / 10),
+            Text('ApiYamu', style: Theme.of(context).textTheme.headline6)
+          ],
         ),
       ),
     );

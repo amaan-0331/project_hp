@@ -35,10 +35,8 @@ class NavigatorProvider extends ChangeNotifier {
       type: BottomNavigationBarType.shifting,
       items: [
         BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-        BottomNavigationBarItem(
-            label: 'Explore', icon: Icon(Icons.location_pin)),
-        BottomNavigationBarItem(
-            label: 'User Account', icon: Icon(Icons.person)),
+        BottomNavigationBarItem(label: 'Explore', icon: Icon(Icons.explore)),
+        BottomNavigationBarItem(label: 'Account', icon: Icon(Icons.person)),
       ],
     );
   }

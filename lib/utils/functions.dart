@@ -135,27 +135,28 @@ class DialogFuncs {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         elevation: 15,
-        // shape: RoundedRectangleBorder(side: BorderSide(width: 500)),
         titlePadding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
         insetPadding: EdgeInsets.all(25),
         contentPadding: EdgeInsets.symmetric(horizontal: 25),
         title: Text(title),
-        content: Container(
-          height: 250,
-          child: Column(
-            children: [
-              Text(description),
-              SizedBox(height: 20),
-              NormalTextInput(
-                lblText: 'Title',
-                inputController: titleController,
-              ),
-              SizedBox(height: 20),
-              NormalTextInput(
-                lblText: 'Snippet',
-                inputController: snippetController,
-              ),
-            ],
+        content: SingleChildScrollView(
+          child: Container(
+            height: 250,
+            child: Column(
+              children: [
+                Text(description),
+                SizedBox(height: 20),
+                NormalTextInput(
+                  lblText: 'Title',
+                  inputController: titleController,
+                ),
+                SizedBox(height: 20),
+                NormalTextInput(
+                  lblText: 'Snippet',
+                  inputController: snippetController,
+                ),
+              ],
+            ),
           ),
         ),
         actions: <Widget>[

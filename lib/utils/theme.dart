@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_hp/components/shadow/boxShadow.dart';
 
 final ThemeData mainTheme = ThemeData(
   visualDensity: VisualDensity.standard,
@@ -36,7 +37,10 @@ final ThemeData mainTheme = ThemeData(
   fontFamily: 'Montserrat',
   textTheme: TextTheme(
     headline6: TextStyle(
-        fontSize: 30, fontWeight: FontWeight.w800, color: Colors.black),
+        fontSize: 30,
+        fontWeight: FontWeight.w800,
+        color: Colors.black,
+        shadows: [boxShadow()]),
     headline1: TextStyle(
         fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
     headline2: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
@@ -59,5 +63,13 @@ final ThemeData mainTheme = ThemeData(
     enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(color: Colors.transparent)),
+  ),
+
+  //Alert dialog decoration/style theme
+  dialogTheme: DialogTheme(
+    elevation: 30,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
   ),
 );

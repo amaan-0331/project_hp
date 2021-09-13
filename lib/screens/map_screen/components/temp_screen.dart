@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/utils/constants.dart';
-import 'package:project_hp/utils/functions.dart';
 
 class TempScreen extends StatelessWidget {
   const TempScreen({
@@ -19,7 +18,8 @@ class TempScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          UtilFuncs.pageLoader,
+          // UtilFuncs.pageLoader,
+          CircularProgressIndicator(),
           SizedBox(
             height: kDefaultPadding * 1.5,
           ),

@@ -27,7 +27,7 @@ class MapScreenProvider extends ChangeNotifier {
   Set<Circle> get getCircleSet => _setofcircles;
 
   //setters
-  CameraPosition setCurrentCamPosition(Position currentLoc) {
+  CameraPosition setCamPosition(Position currentLoc) {
     return CameraPosition(
       target: LatLng(
         currentLoc.latitude,

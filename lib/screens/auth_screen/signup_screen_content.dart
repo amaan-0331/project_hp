@@ -33,7 +33,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Spacer(flex: 3),
-              Text('Welcome to the Geo Tagger',
+              Text('Welcome to ApiYamu',
                   style: Theme.of(context).textTheme.headline1),
               Text('Create an Account',
                   style: Theme.of(context).textTheme.subtitle1),

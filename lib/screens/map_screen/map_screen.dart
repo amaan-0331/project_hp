@@ -45,15 +45,19 @@ class _MapScreenState extends State<MapScreen> {
                 },
               );
 
-              return GoogleMap(
-                markers: value.getMarkerSet,
-                padding: EdgeInsets.all(35),
-                mapType: MapType.normal,
-                onLongPress: (userPosition) async =>
-                    await value.saveMarker(userPosition, context),
-                initialCameraPosition: value.setCurrentCamPosition(_currentLoc),
-                onMapCreated: (GoogleMapController controller) =>
-                    _controller.complete(controller),
+              return SafeArea(
+                child: GoogleMap(
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  markers: value.getMarkerSet,
+                  padding: EdgeInsets.all(35),
+                  mapType: MapType.normal,
+                  onLongPress: (userPosition) async =>
+                      await value.saveMarker(userPosition, context),
+                  initialCameraPosition: value.setCamPosition(_currentLoc),
+                  onMapCreated: (GoogleMapController controller) =>
+                      _controller.complete(controller),
+                ),
               );
             },
           );

@@ -91,7 +91,6 @@ class AuthController {
   Future<void> signInAnonymous() async {
     try {
       //Logics
-      await FirebaseAuth.instance.signInAnonymously();
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('uid', kAnonymous);
 
@@ -102,14 +101,6 @@ class AuthController {
       Logger().d('\n\n Anonymously LoggedIn! \n\n');
       await DialogFuncs.alertDialog(context, 'Sneaky😜!',
           'Logged In without Authentication! Enjoy Sharing the moment!');
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'operation-not-allowed') {
-        DialogFuncs.alertDialog(context, 'Not Allowed', e.message);
-        Logger().e('\n\n ${e.message} \n\n');
-      } else {
-        DialogFuncs.alertDialog(context, 'Error', e.message);
-        Logger().e(e.message);
-      }
     } catch (e) {
       DialogFuncs.alertDialog(context, 'Error', e.toString());
       Logger().e(e.toString());

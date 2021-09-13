@@ -46,11 +46,16 @@ class HomeScreenList extends StatelessWidget {
 
           return ListView(
             cacheExtent: 15,
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data = DatabaseController()
-                  .processDataFromStreambuilder(context, document);
-              return MarkerCard(data: data);
-            }).toList(),
+            children: snapshot.data!.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data = DatabaseController()
+                    .processDataFromStreambuilder(context, document);
+                return MarkerCard(
+                  data: data,
+                  func: () {},
+                );
+              },
+            ).toList(),
           );
         },
       ),
