@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:project_hp/providers/auth_providers/auth_provider.dart';
-import 'package:project_hp/providers/map_provider/location_provider.dart';
-import 'package:project_hp/providers/map_provider/map_screen_provider.dart';
-import 'package:project_hp/providers/navigator_provider/navigator_provider.dart';
-import 'package:project_hp/screens/splash_screen/splash_screen.dart';
-import 'package:project_hp/utils/theme.dart';
+import 'package:project_hp/src/providers/auth_providers/auth_provider.dart';
+import 'package:project_hp/src/providers/map_provider/location_provider.dart';
+import 'package:project_hp/src/providers/map_provider/map_screen_provider.dart';
+import 'package:project_hp/src/providers/navigator_provider/navigator_provider.dart';
+import 'package:project_hp/src/screens/splash_screen/splash_screen.dart';
+import 'package:project_hp/src/utils/theme.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
