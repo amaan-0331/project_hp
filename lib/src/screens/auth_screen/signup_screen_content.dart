@@ -30,7 +30,6 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           key: value.getSignUpFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Spacer(flex: 3),
               Text('Welcome to ApiYamu',
@@ -42,11 +41,14 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                 lblText: 'Full Name',
                 hintText: 'Johnny Someone',
                 inputController: value.getNameController,
+                inputAction: TextInputAction.next,
+                inputType: TextInputType.name,
               ),
               Spacer(),
               FormTextInput(
                 lblText: 'Email',
                 inputType: TextInputType.emailAddress,
+                inputAction: TextInputAction.next,
                 hintText: 'someone@somewhere.com',
                 inputController: value.getEmailController,
                 validatorFunc: emailValidator(),
@@ -56,6 +58,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                 lblText: 'Password',
                 obscure: true,
                 inputController: value.getPasswordController,
+                inputAction: TextInputAction.done,
                 validatorFunc: passwordValidator(),
               ),
               Spacer(),

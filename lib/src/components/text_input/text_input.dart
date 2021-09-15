@@ -9,6 +9,7 @@ class FormTextInput extends StatelessWidget {
     this.onChangedFunc,
     this.inputController,
     this.inputType,
+    this.inputAction,
     this.validatorFunc,
     this.obscure = false,
   }) : super(key: key);
@@ -19,6 +20,7 @@ class FormTextInput extends StatelessWidget {
   final TextEditingController? inputController;
   final String? Function(String?)? validatorFunc;
   final TextInputType? inputType;
+  final TextInputAction? inputAction;
   final bool obscure;
 
   @override
@@ -35,6 +37,7 @@ class FormTextInput extends StatelessWidget {
           color: Color(0xffD4D3E3), borderRadius: BorderRadius.circular(20)),
       child: Center(
         child: TextFormField(
+          textInputAction: inputAction,
           validator: validatorFunc,
           obscureText: obscure,
           keyboardType: inputType,

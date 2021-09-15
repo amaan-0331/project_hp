@@ -42,6 +42,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                 lblText: 'Email',
                 inputController: value.getEmailController,
                 inputType: TextInputType.emailAddress,
+                inputAction: TextInputAction.done,
                 hintText: 'someone@somewhere.com',
                 validatorFunc: emailValidator(),
               ),
