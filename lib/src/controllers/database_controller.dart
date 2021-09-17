@@ -39,6 +39,36 @@ class DatabaseController {
     return currentUser;
   }
 
+  //get current marker details
+  Future<MarkerModel?> getCurrentMarkerDetails(String markerId) async {
+    MarkerModel currentMarker = MarkerModel(
+      markerId: markerId,
+      uid: '',
+      latitude: 0,
+      longitude: 0,
+      infoTitle: '',
+      infoSnippet: '',
+      downVoterslist: [],
+      upVoterslist: [],
+    );
+    DocumentSnapshot document = await markers.doc(markerId).get();
+    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+    if (document.data() != null) {
+      currentMarker.uid = data['uid'];
+      currentMarker.infoTitle = data['title'];
+      currentMarker.infoSnippet = data['snippet'];
+      currentMarker.latitude = data['latitude'];
+      currentMarker.longitude = data['longitude'];
+      if (data[kUpvotersList] != null) {
+        currentMarker.upVoterslist = data[kUpvotersList];
+      }
+      if (data[kDownvotersList] != null) {
+        currentMarker.downVoterslist = data[kDownvotersList];
+      }
+      return currentMarker;
+    }
+  }
+
   //Function to save user data
   Future<void> saveUserData(String name, email, uid) {
     // Call the user's CollectionReference to add a new user
@@ -72,30 +102,55 @@ class DatabaseController {
   }
 
   //Function to update marker data in user collection
-  void updateMarkerInUserData(String uid, String markerId) {
+  void addMarkerInUserData(String uid, String markerId) {
     users.doc(uid).update({
       'markers': FieldValue.arrayUnion([markerId])
     });
   }
 
-  // // user doc stream
-  // Stream<UserModel> get userData {
-  //   return users.doc(uid).snapshots().map(_userDataFromSnapshot);
-  // }
+  //Function to add marker data in user vote collection
+  Future<void> addMarkerInUserVoteData(String markerId, String listName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+    users.doc(uid).update({
+      listName: FieldValue.arrayUnion([markerId])
+    });
+  }
 
-  // // user data from snapshots
-  // UserModel _userDataFromSnapshot(DocumentSnapshot document) {
-  //   Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-  //   return UserModel(
-  //     uid: uid!,
-  //     name: data['name'],
-  //     email: data['sugars'],
-  //   );
-  // }
+  //Function to remove marker data in user vote collection
+  Future<void> removeMarkerInUserVoteData(
+      String markerId, String listName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+    users.doc(uid).update({
+      listName: FieldValue.arrayRemove([markerId])
+    });
+  }
+
+  //Function to add marker data in user vote collection
+  Future<void> addUserInMarkerVoteData(String markerId, String listName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+    markers.doc(markerId).update({
+      listName: FieldValue.arrayUnion([uid])
+    });
+  }
+
+  //Function to remove marker data in user vote collection
+  Future<void> removeUserInMarkerVoteData(
+      String markerId, String listName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+    markers.doc(markerId).update({
+      listName: FieldValue.arrayRemove([uid])
+    });
+  }
 
   //Function to process marker stream
   Map<String, dynamic> processDataFromStreambuilder(
-      BuildContext context, DocumentSnapshot document) {
+    BuildContext context,
+    DocumentSnapshot document,
+  ) {
     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
     MarkerModel model = MarkerModel(
         markerId: document.id,

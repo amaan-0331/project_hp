@@ -4,6 +4,7 @@ class MarkerModel {
   String? markerId, uid;
   double latitude, longitude;
   String infoTitle, infoSnippet;
+  List<dynamic> upVoterslist, downVoterslist;
 
   MarkerModel({
     required this.markerId,
@@ -12,6 +13,8 @@ class MarkerModel {
     required this.longitude,
     required this.infoTitle,
     required this.infoSnippet,
+    this.upVoterslist = const [],
+    this.downVoterslist = const [],
   });
 }
 

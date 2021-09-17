@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -18,7 +16,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  Completer<GoogleMapController> _controller = Completer();
+  //Completer<GoogleMapController> _controller = Completer();
   @override
   Widget build(BuildContext context) {
     Position _currentLoc =
@@ -55,8 +53,8 @@ class _MapScreenState extends State<MapScreen> {
                   onLongPress: (userPosition) async =>
                       await value.saveMarker(userPosition, context),
                   initialCameraPosition: value.setCamPosition(_currentLoc),
-                  onMapCreated: (GoogleMapController controller) =>
-                      _controller.complete(controller),
+                  // onMapCreated: (GoogleMapController controller) =>
+                  //     _controller.complete(controller),
                 ),
               );
             },
