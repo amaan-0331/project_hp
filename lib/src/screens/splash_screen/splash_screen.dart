@@ -40,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
+  //won't be necessary at the end
   Future<void> navigateToHome() async {
     Logger().i('patangatta');
     await Provider.of<LocationProvider>(context, listen: false)

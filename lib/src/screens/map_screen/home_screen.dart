@@ -45,6 +45,7 @@ class HomeScreenList extends StatelessWidget {
           }
 
           return ListView(
+            physics: BouncingScrollPhysics(),
             cacheExtent: 15,
             children: snapshot.data!.docs.map(
               (DocumentSnapshot document) {
