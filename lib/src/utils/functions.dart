@@ -94,7 +94,7 @@ class DialogFuncs {
   static Future<String?> alertDialogWithTwoBtn(
     BuildContext context,
     String title,
-    description,
+    String description,
     String btnText1,
     Function func1,
     String btnText2,
@@ -242,6 +242,27 @@ class DialogFuncs {
           },
         );
       },
+    );
+  }
+
+  //Alert Dialog Function with custom widgets
+  static Future<String?> alertDialogWithExtraWidgets(
+    BuildContext context,
+    String title,
+    Widget description,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: description,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Ok'),
+          ),
+        ],
+      ),
     );
   }
 }

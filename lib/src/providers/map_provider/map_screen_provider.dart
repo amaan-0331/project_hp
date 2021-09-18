@@ -125,85 +125,99 @@ class MapScreenProvider extends ChangeNotifier {
     if (curMarkerModel.runtimeType == MarkerModel) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? uid = prefs.getString('uid');
-      VoteStatus voteStatus = checkVoteStatus(
-        markerId,
-        uid!,
-        curMarkerModel!.upVoterslist,
-        curMarkerModel.downVoterslist,
-      );
+      if (uid == kAnonymous) {
+        VoteStatus voteStatus = checkVoteStatus(
+          markerId,
+          uid!,
+          curMarkerModel!.upVoterslist,
+          curMarkerModel.downVoterslist,
+        );
 
-      if (voteStatus == VoteStatus.notVoted) {
-        curMarkerModel.upVoterslist.remove(uid);
-        curMarkerModel.downVoterslist.remove(uid);
+        if (voteStatus == VoteStatus.notVoted) {
+          curMarkerModel.upVoterslist.remove(uid);
+          curMarkerModel.downVoterslist.remove(uid);
+        }
+
+        int voteCount = (curMarkerModel.upVoterslist.length -
+            curMarkerModel.downVoterslist.length);
+        DialogFuncs.alertDialogForMarker(
+          navigatorKey.currentContext!,
+          curMarkerModel.infoTitle,
+          curMarkerModel.infoSnippet,
+          voteStatus,
+          voteCount,
+          () {
+            if (voteStatus == VoteStatus.notVoted) {
+              DatabaseController()
+                  .addMarkerInUserVoteData(markerId, kUpvotedList);
+              DatabaseController()
+                  .addUserInMarkerVoteData(markerId, kUpvotersList);
+              curMarkerModel.upVoterslist.add(uid);
+              voteStatus = VoteStatus.upvoted;
+            } else if (voteStatus == VoteStatus.upvoted) {
+              DatabaseController()
+                  .removeMarkerInUserVoteData(markerId, kUpvotedList);
+              DatabaseController()
+                  .removeUserInMarkerVoteData(markerId, kUpvotersList);
+              curMarkerModel.upVoterslist.remove(uid);
+              voteStatus = VoteStatus.notVoted;
+            } else {
+              DatabaseController()
+                  .removeMarkerInUserVoteData(markerId, kDownvotedList);
+              DatabaseController()
+                  .removeUserInMarkerVoteData(markerId, kDownvotersList);
+              curMarkerModel.downVoterslist.remove(uid);
+              DatabaseController()
+                  .addMarkerInUserVoteData(markerId, kUpvotedList);
+              DatabaseController()
+                  .addUserInMarkerVoteData(markerId, kUpvotersList);
+              curMarkerModel.upVoterslist.add(uid);
+              voteStatus = VoteStatus.upvoted;
+            }
+          },
+          () {
+            if (voteStatus == VoteStatus.notVoted) {
+              DatabaseController()
+                  .addMarkerInUserVoteData(markerId, kDownvotedList);
+              DatabaseController()
+                  .addUserInMarkerVoteData(markerId, kDownvotersList);
+              curMarkerModel.downVoterslist.add(uid);
+              voteStatus = VoteStatus.downvoted;
+            } else if (voteStatus == VoteStatus.downvoted) {
+              DatabaseController()
+                  .removeMarkerInUserVoteData(markerId, kDownvotedList);
+              DatabaseController()
+                  .removeUserInMarkerVoteData(markerId, kDownvotersList);
+              curMarkerModel.downVoterslist.remove(uid);
+              voteStatus = VoteStatus.notVoted;
+            } else {
+              DatabaseController()
+                  .removeMarkerInUserVoteData(markerId, kUpvotedList);
+              DatabaseController()
+                  .removeUserInMarkerVoteData(markerId, kUpvotersList);
+              curMarkerModel.upVoterslist.remove(uid);
+              DatabaseController()
+                  .addMarkerInUserVoteData(markerId, kDownvotedList);
+              DatabaseController()
+                  .addUserInMarkerVoteData(markerId, kDownvotersList);
+              curMarkerModel.downVoterslist.add(uid);
+              voteStatus = VoteStatus.downvoted;
+            }
+          },
+        );
+      } else {
+        DialogFuncs.alertDialogWithExtraWidgets(
+          navigatorKey.currentContext!,
+          curMarkerModel!.infoTitle,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(curMarkerModel.infoSnippet),
+              Text('Login and vote...'),
+            ],
+          ),
+        );
       }
-
-      int voteCount = (curMarkerModel.upVoterslist.length -
-          curMarkerModel.downVoterslist.length);
-      DialogFuncs.alertDialogForMarker(
-        navigatorKey.currentContext!,
-        curMarkerModel.infoTitle,
-        curMarkerModel.infoSnippet,
-        voteStatus,
-        voteCount,
-        () {
-          if (voteStatus == VoteStatus.notVoted) {
-            DatabaseController()
-                .addMarkerInUserVoteData(markerId, kUpvotedList);
-            DatabaseController()
-                .addUserInMarkerVoteData(markerId, kUpvotersList);
-            curMarkerModel.upVoterslist.add(uid);
-            voteStatus = VoteStatus.upvoted;
-          } else if (voteStatus == VoteStatus.upvoted) {
-            DatabaseController()
-                .removeMarkerInUserVoteData(markerId, kUpvotedList);
-            DatabaseController()
-                .removeUserInMarkerVoteData(markerId, kUpvotersList);
-            curMarkerModel.upVoterslist.remove(uid);
-            voteStatus = VoteStatus.notVoted;
-          } else {
-            DatabaseController()
-                .removeMarkerInUserVoteData(markerId, kDownvotedList);
-            DatabaseController()
-                .removeUserInMarkerVoteData(markerId, kDownvotersList);
-            curMarkerModel.downVoterslist.remove(uid);
-            DatabaseController()
-                .addMarkerInUserVoteData(markerId, kUpvotedList);
-            DatabaseController()
-                .addUserInMarkerVoteData(markerId, kUpvotersList);
-            curMarkerModel.upVoterslist.add(uid);
-            voteStatus = VoteStatus.upvoted;
-          }
-        },
-        () {
-          if (voteStatus == VoteStatus.notVoted) {
-            DatabaseController()
-                .addMarkerInUserVoteData(markerId, kDownvotedList);
-            DatabaseController()
-                .addUserInMarkerVoteData(markerId, kDownvotersList);
-            curMarkerModel.downVoterslist.add(uid);
-            voteStatus = VoteStatus.downvoted;
-          } else if (voteStatus == VoteStatus.downvoted) {
-            DatabaseController()
-                .removeMarkerInUserVoteData(markerId, kDownvotedList);
-            DatabaseController()
-                .removeUserInMarkerVoteData(markerId, kDownvotersList);
-            curMarkerModel.downVoterslist.remove(uid);
-            voteStatus = VoteStatus.notVoted;
-          } else {
-            DatabaseController()
-                .removeMarkerInUserVoteData(markerId, kUpvotedList);
-            DatabaseController()
-                .removeUserInMarkerVoteData(markerId, kUpvotersList);
-            curMarkerModel.upVoterslist.remove(uid);
-            DatabaseController()
-                .addMarkerInUserVoteData(markerId, kDownvotedList);
-            DatabaseController()
-                .addUserInMarkerVoteData(markerId, kDownvotersList);
-            curMarkerModel.downVoterslist.add(uid);
-            voteStatus = VoteStatus.downvoted;
-          }
-        },
-      );
       Logger().v(curMarkerModel.infoTitle, curMarkerModel.infoSnippet);
     } else {
       //type error
