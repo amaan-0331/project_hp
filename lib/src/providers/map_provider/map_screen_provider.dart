@@ -1,14 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:project_hp/main.dart';
+import 'package:project_hp/src/components/alert_dialogs/alert_dialogs.dart';
 import 'package:project_hp/src/controllers/auth_controller.dart';
 import 'package:project_hp/src/controllers/database_controller.dart';
 import 'package:project_hp/src/models/map_marker_model.dart';
 import 'package:project_hp/src/utils/constants.dart';
-import 'package:project_hp/src/utils/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MapScreenProvider extends ChangeNotifier {
@@ -17,44 +16,79 @@ class MapScreenProvider extends ChangeNotifier {
 
   Set<Marker> _setofmarkers = {};
   Set<Circle> _setofcircles = {};
-
   CameraPosition? _currentCamPos;
+
+  CameraPosition? _newCamPosition;
+
+  GoogleMapController? mapController;
+
+  // int nearbyMarkersCount = 0;
 
   //getters
   TextEditingController get getTitleController => _titleController;
   TextEditingController get getSnippetController => _snippetController;
   CameraPosition? get getCurrentLocationCameraPostion => _currentCamPos;
+  CameraPosition? get getNewCameraPostion => _newCamPosition;
   Set<Marker> get getMarkerSet => _setofmarkers;
   Set<Circle> get getCircleSet => _setofcircles;
 
   //setters
   CameraPosition setCamPosition(Position currentLoc) {
-    return CameraPosition(
+    if (_newCamPosition == null) {
+      return CameraPosition(
+        target: LatLng(
+          currentLoc.latitude,
+          currentLoc.longitude,
+        ),
+        zoom: kZoom,
+        tilt: kTilt,
+      );
+    } else {
+      return _newCamPosition!;
+    }
+  }
+
+  void setNewCamPosition(LatLng currentLoc) {
+    CameraPosition camPos = CameraPosition(
       target: LatLng(
         currentLoc.latitude,
         currentLoc.longitude,
       ),
-      zoom: 17,
-      tilt: 60,
+      zoom: kZoom,
+      tilt: kTilt,
     );
+    _newCamPosition = camPos;
+    Logger().i(_newCamPosition.toString());
   }
 
-  //getting markers from database //not being used
-  Future<void> addMarkersFromDatabase(
-      DocumentSnapshot document, BuildContext context) async {
-    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-    MarkerModel model = MarkerModel(
-      markerId: document.id,
-      uid: data['uid'],
-      latitude: data['latitude'],
-      longitude: data['longitude'],
-      infoTitle: data['infoTitle'],
-      infoSnippet: data['infoSnippet'],
+  //function to animate camera to new loc
+  void animateToLocation(LatLng location) {
+    CameraPosition camPos = CameraPosition(
+      target: location,
+      zoom: kZoom,
+      tilt: kTilt,
     );
-    await addMarkerToSet(model);
-    notifyListeners();
-    Logger().i('New Location ${document.id} Created!');
+    mapController!.animateCamera(CameraUpdate.newCameraPosition(camPos));
   }
+
+  //getting markers from database //not being used //could be used
+  // Future<void> getMarkersFromDatabase(
+  //   DocumentSnapshot document,
+  //   BuildContext context,
+  // ) async {
+  //   Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+  //   MarkerModel model = MarkerModel(
+  //     markerId: document.id,
+  //     uid: data['uid'],
+  //     latitude: data['latitude'],
+  //     longitude: data['longitude'],
+  //     title: data['infoTitle'],
+  //     snippet: data['infoSnippet'],
+  //   );
+  //   await addMarkerToSet(model);
+  //   notifyListeners();
+  //   Logger().i('New Location ${document.id} Created!');
+  // }
 
   //save user selection --> long press function
   Future<void> saveMarker(LatLng userPosition, BuildContext context) async {
@@ -81,8 +115,8 @@ class MapScreenProvider extends ChangeNotifier {
         uid: prefs.getString('uid'),
         latitude: userPosition.latitude,
         longitude: userPosition.longitude,
-        infoTitle: getTitleController.text,
-        infoSnippet: getSnippetController.text,
+        title: getTitleController.text,
+        snippet: getSnippetController.text,
       );
       if (getTitleController.text == '' || getSnippetController.text == '') {
         DialogFuncs.alertDialog(
@@ -125,7 +159,7 @@ class MapScreenProvider extends ChangeNotifier {
     if (curMarkerModel.runtimeType == MarkerModel) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? uid = prefs.getString('uid');
-      if (uid == kAnonymous) {
+      if (uid != kAnonymous) {
         VoteStatus voteStatus = checkVoteStatus(
           markerId,
           uid!,
@@ -142,8 +176,8 @@ class MapScreenProvider extends ChangeNotifier {
             curMarkerModel.downVoterslist.length);
         DialogFuncs.alertDialogForMarker(
           navigatorKey.currentContext!,
-          curMarkerModel.infoTitle,
-          curMarkerModel.infoSnippet,
+          curMarkerModel.title,
+          curMarkerModel.snippet,
           voteStatus,
           voteCount,
           () {
@@ -208,17 +242,17 @@ class MapScreenProvider extends ChangeNotifier {
       } else {
         DialogFuncs.alertDialogWithExtraWidgets(
           navigatorKey.currentContext!,
-          curMarkerModel!.infoTitle,
+          curMarkerModel!.title,
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(curMarkerModel.infoSnippet),
+              Text(curMarkerModel.snippet),
               Text('Login and vote...'),
             ],
           ),
         );
       }
-      Logger().v(curMarkerModel.infoTitle, curMarkerModel.infoSnippet);
+      Logger().v(curMarkerModel.title, curMarkerModel.snippet);
     } else {
       //type error
       DialogFuncs.alertDialog(
@@ -252,6 +286,11 @@ class MapScreenProvider extends ChangeNotifier {
     }
     return voteStatus;
   }
+
+  // void increaseNearbyMarkers() {
+  //   nearbyMarkersCount++;
+  //   notifyListeners();
+  // }
 
   //removing all markers //not being used
   void removeMarkers() {

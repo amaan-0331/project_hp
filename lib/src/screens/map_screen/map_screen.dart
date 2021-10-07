@@ -1,11 +1,13 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project_hp/src/components/temp_screen/temp_screen.dart';
 import 'package:project_hp/src/controllers/database_controller.dart';
 import 'package:project_hp/src/providers/map_provider/location_provider.dart';
 import 'package:project_hp/src/providers/map_provider/map_screen_provider.dart';
-import 'package:project_hp/src/screens/map_screen/components/temp_screen.dart';
 import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
@@ -16,7 +18,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  //Completer<GoogleMapController> _controller = Completer();
+  Completer<GoogleMapController> _controller = Completer();
   @override
   Widget build(BuildContext context) {
     Position _currentLoc =
@@ -53,8 +55,13 @@ class _MapScreenState extends State<MapScreen> {
                   onLongPress: (userPosition) async =>
                       await value.saveMarker(userPosition, context),
                   initialCameraPosition: value.setCamPosition(_currentLoc),
-                  // onMapCreated: (GoogleMapController controller) =>
-                  //     _controller.complete(controller),
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                    value.mapController = controller;
+                  },
+                  onTap: (tapLocation) {
+                    value.animateToLocation(tapLocation);
+                  },
                 ),
               );
             },

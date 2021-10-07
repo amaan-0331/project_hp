@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:project_hp/src/components/alert_dialogs/alert_dialogs.dart';
 import 'package:project_hp/src/components/button/main_button.dart';
+import 'package:project_hp/src/components/tile_card/tag_list_card.dart';
 import 'package:project_hp/src/controllers/auth_controller.dart';
 import 'package:project_hp/src/controllers/database_controller.dart';
 import 'package:project_hp/src/models/user_model.dart';
 import 'package:project_hp/src/screens/account_screen/components/account_screen_header.dart';
+import 'package:project_hp/src/screens/account_screen/downvoted_markers_screen.dart';
+import 'package:project_hp/src/screens/account_screen/user_markers_screen.dart';
+import 'package:project_hp/src/screens/account_screen/upvoted_markers_screen.dart';
 import 'package:project_hp/src/utils/constants.dart';
+import 'package:project_hp/src/utils/functions.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -97,29 +103,54 @@ class UserAccountContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 25,
-            ),
-            AccountScreenHeader(user: user),
-            SizedBox(
-              height: 25,
-            ),
-            Expanded(child: SizedBox()),
-            MainButton(
-              btnText: 'Sign Out',
-              btnFunc: () => AuthController(context).signOut(),
-              btnWidth: size.width,
-            ),
-            SizedBox(
-              height: 25,
-            )
-          ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 25,
+              ),
+              AccountScreenHeader(user: user),
+              SizedBox(
+                height: 25,
+              ),
+              TagListCard(
+                content: 'My Markers',
+                function: () =>
+                    NavigatorFuncs.navigateTo(context, UserMarkers(user: user)),
+                size: size,
+              ),
+              TagListCard(
+                content: 'Upvoted Markers',
+                function: () => NavigatorFuncs.navigateTo(
+                    context, UpvotedMarkers(user: user)),
+                size: size,
+              ),
+              TagListCard(
+                content: 'Downvoted Markers',
+                function: () => NavigatorFuncs.navigateTo(
+                    context, DownvotedMarkers(user: user)),
+                size: size,
+              ),
+              TagListCard(
+                content: 'Log Out',
+                function: () => DialogFuncs.alertDialogWithBtn(
+                  context,
+                  'Leaving?',
+                  'Sad to see you leave!',
+                  'Log Out',
+                  () => AuthController(context).signOut(),
+                ),
+                size: size,
+              ),
+              SizedBox(
+                height: 25,
+              )
+            ],
+          ),
         ),
       ),
     );

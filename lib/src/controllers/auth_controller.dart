@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:project_hp/src/components/alert_dialogs/alert_dialogs.dart';
 import 'package:project_hp/src/controllers/database_controller.dart';
+import 'package:project_hp/src/providers/navigator_provider/navigator_provider.dart';
 import 'package:project_hp/src/screens/auth_screen/auth_screen.dart';
 import 'package:project_hp/src/screens/auth_screen/welcome_screen.dart';
 import 'package:project_hp/src/screens/screen_navigator/bottom_navigator.dart';
 import 'package:project_hp/src/utils/constants.dart';
 import 'package:project_hp/src/utils/functions.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController {
@@ -21,16 +24,23 @@ class AuthController {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      //
       await DatabaseController()
           .saveUserData(name, email, userCredential.user!.uid);
+
+      //sending user an email verification link
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+      }
 
       //Navigating...
       NavigatorFuncs.navigateToNoBack(
           context, AuthScreen(userSelection: Screens.logInScreen));
 
       //Letting the user know
-      await DialogFuncs.alertDialog(
-          context, 'Success', 'User Created Successfully, You can Login Now!');
+      await DialogFuncs.alertDialog(context, 'Success',
+          'Check your email and Verify your Email. Then you can Login!');
       Logger().d('\n\n ${userCredential.user!.uid} - User Created! \n\n');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -57,17 +67,35 @@ class AuthController {
       //Logics
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('uid', userCredential.user!.uid);
+      User? user = FirebaseAuth.instance.currentUser;
 
-      Logger().d('\n\n ${userCredential.user!.uid} - User Logged In! \n\n');
+      //checking if the user email is verified
+      if (user!.emailVerified) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('uid', userCredential.user!.uid);
 
-      //Navigating...
-      NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
+        Logger().d('\n\n ${userCredential.user!.uid} - User Logged In! \n\n');
 
-      //Letting the user know
-      DialogFuncs.alertDialog(
-          context, 'Success!', 'Login Successful! Enjoy Sharing the moment!');
+        //Navigating...
+        Provider.of<NavigatorProvider>(context, listen: false)
+            .setCurrentScreenIndex(0);
+        NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
+
+        //Letting the user know
+        DialogFuncs.alertDialog(
+            context, 'Success!', 'Login Successful! Enjoy Sharing the moment!');
+      } else {
+        //Letting the user know
+        DialogFuncs.alertDialogWithBtn(
+          context,
+          'Need Email verification!',
+          'Check the Email Address and Verify your Email Account',
+          'Get Link Again',
+          () async => await user.sendEmailVerification(),
+        );
+        //removing user login if email is not verified
+        await FirebaseAuth.instance.signOut();
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         DialogFuncs.alertDialog(
@@ -95,6 +123,8 @@ class AuthController {
       prefs.setString('uid', kAnonymous);
 
       //Navigating...
+      Provider.of<NavigatorProvider>(context, listen: false)
+          .setCurrentScreenIndex(0);
       NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
 
       //Letting the user know

@@ -8,3 +8,12 @@ BoxShadow boxShadow() {
     offset: Offset(4, 8),
   );
 }
+
+BoxShadow boxShadowSubtle() {
+  return BoxShadow(
+    color: Colors.grey.withOpacity(0.5),
+    spreadRadius: 1,
+    blurRadius: 1,
+    offset: Offset(1, 2),
+  );
+}

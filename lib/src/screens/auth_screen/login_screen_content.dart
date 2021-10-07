@@ -37,7 +37,7 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
               Spacer(flex: 2),
               Text(
                 'Hey Tourist!',
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.headline3,
               ),
               Text(
                 'Signin to Continue',

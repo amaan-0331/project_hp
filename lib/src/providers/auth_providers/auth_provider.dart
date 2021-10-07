@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:project_hp/src/components/alert_dialogs/alert_dialogs.dart';
 import 'package:project_hp/src/controllers/auth_controller.dart';
-import 'package:project_hp/src/utils/functions.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
-  // var _nextScreen;
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
   //gettters
   bool get getLoading => _isLoading;
-  // Screens get getNextScreen => _nextScreen;
   TextEditingController get getNameController => _name;
   TextEditingController get getEmailController => _email;
   TextEditingController get getPasswordController => _password;

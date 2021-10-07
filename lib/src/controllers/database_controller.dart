@@ -31,9 +31,16 @@ class DatabaseController {
       DocumentSnapshot document = await users.doc(uid).get();
       if (document.data() != null) {
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-        currentUser.uid = data['uid'];
-        currentUser.name = data['name'];
-        currentUser.email = data['email'];
+        currentUser = UserModel.fromJson(data);
+        if (data['markers'] != null) {
+          currentUser.userMarkers = data['markers'];
+        }
+        if (data[kUpvotedList] != null) {
+          currentUser.upVotedlist = data[kUpvotedList];
+        }
+        if (data[kDownvotedList] != null) {
+          currentUser.downVotedlist = data[kDownvotedList];
+        }
       }
     }
     return currentUser;
@@ -46,8 +53,8 @@ class DatabaseController {
       uid: '',
       latitude: 0,
       longitude: 0,
-      infoTitle: '',
-      infoSnippet: '',
+      title: '',
+      snippet: '',
       downVoterslist: [],
       upVoterslist: [],
     );
@@ -55,8 +62,8 @@ class DatabaseController {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
     if (document.data() != null) {
       currentMarker.uid = data['uid'];
-      currentMarker.infoTitle = data['title'];
-      currentMarker.infoSnippet = data['snippet'];
+      currentMarker.title = data['title'];
+      currentMarker.snippet = data['snippet'];
       currentMarker.latitude = data['latitude'];
       currentMarker.longitude = data['longitude'];
       if (data[kUpvotersList] != null) {
@@ -90,8 +97,9 @@ class DatabaseController {
     return markers
         .doc(markerModel.markerId)
         .set({
-          'title': markerModel.infoTitle,
-          'snippet': markerModel.infoSnippet,
+          'markerId': markerModel.markerId,
+          'title': markerModel.title,
+          'snippet': markerModel.snippet,
           'latitude': markerModel.latitude,
           'longitude': markerModel.longitude,
           'uid': markerModel.uid,
@@ -147,7 +155,7 @@ class DatabaseController {
   }
 
   //Function to process marker stream
-  Map<String, dynamic> processDataFromStreambuilder(
+  MarkerModel processDataFromStreambuilder(
     BuildContext context,
     DocumentSnapshot document,
   ) {
@@ -157,10 +165,10 @@ class DatabaseController {
         uid: data['uid'],
         latitude: data['latitude'],
         longitude: data['longitude'],
-        infoTitle: data['title'],
-        infoSnippet: data['snippet']);
+        title: data['title'],
+        snippet: data['snippet']);
     Provider.of<MapScreenProvider>(context, listen: false)
         .addMarkerToSet(model);
-    return data;
+    return model;
   }
 }

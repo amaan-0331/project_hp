@@ -34,7 +34,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
             children: [
               Spacer(flex: 2),
               Text('Forgot Password?',
-                  style: Theme.of(context).textTheme.headline1),
+                  style: Theme.of(context).textTheme.headline3),
               Text('Enter Email for Password Reset Link',
                   style: Theme.of(context).textTheme.subtitle1),
               Spacer(flex: 2),

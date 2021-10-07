@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
-import 'package:project_hp/src/utils/functions.dart';
+import 'package:project_hp/src/components/alert_dialogs/alert_dialogs.dart';
 
 class LocationProvider extends ChangeNotifier {
   bool _serviceEnabled = false;

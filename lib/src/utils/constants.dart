@@ -10,7 +10,17 @@ enum VoteStatus {
 }
 
 const double kDefaultPadding = 15;
+
+//consts for google map camera positionszoom: 17,tilt: 60,
+const double kZoom = 17;
+const double kTilt = 60;
+
+//constant distance for checking distance
+const double kCheckDistance = 4000;
+
+//constant name for anonymous user
 const String kAnonymous = 'anonymous';
+
 //this is for markers upvoted by user, stored in user collection
 const String kUpvotedList = 'upvotedmarkers';
 //this is for markers downvoted by user, stored in user collection

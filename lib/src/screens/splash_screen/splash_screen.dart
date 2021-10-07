@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: size.height / 4,
             ),
             SizedBox(height: size.height / 10),
-            Text('ApiYamu', style: Theme.of(context).textTheme.headline6)
+            Text('ApiYamu', style: Theme.of(context).textTheme.headline1)
           ],
         ),
       ),

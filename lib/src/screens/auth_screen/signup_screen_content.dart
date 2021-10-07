@@ -33,7 +33,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
             children: [
               Spacer(flex: 3),
               Text('Welcome to ApiYamu',
-                  style: Theme.of(context).textTheme.headline1),
+                  style: Theme.of(context).textTheme.headline3),
               Text('Create an Account',
                   style: Theme.of(context).textTheme.subtitle1),
               Spacer(flex: 2),

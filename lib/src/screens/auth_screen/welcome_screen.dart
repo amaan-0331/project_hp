@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project_hp/src/components/button/main_button.dart';
 import 'package:project_hp/src/components/button/secondary_button.dart';
 import 'package:project_hp/src/providers/auth_providers/auth_provider.dart';
@@ -21,15 +22,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     return Scaffold(
       body: Container(
+        height: size.height,
         width: size.width,
         padding: EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Lottie.network(
+              'https://assets4.lottiefiles.com/packages/lf20_veqkjqvf.json',
+              errorBuilder: (context, error, stackTrace) => SizedBox(),
+              repeat: true,
+              animate: true,
+            ),
+            SizedBox(height: kDefaultPadding - 5),
             Text(
               'Start Exploring the World',
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.headline3,
             ),
             SizedBox(height: kDefaultPadding),
             Text(
