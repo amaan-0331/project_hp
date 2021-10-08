@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:project_hp/src/components/alert_dialogs/alert_dialogs.dart';
 import 'package:project_hp/src/controllers/database_controller.dart';
+import 'package:project_hp/src/models/user_model.dart';
 import 'package:project_hp/src/providers/navigator_provider/navigator_provider.dart';
 import 'package:project_hp/src/screens/auth_screen/auth_screen.dart';
 import 'package:project_hp/src/screens/auth_screen/welcome_screen.dart';
+import 'package:project_hp/src/screens/intro_screen/intro_screen.dart';
 import 'package:project_hp/src/screens/screen_navigator/bottom_navigator.dart';
 import 'package:project_hp/src/utils/constants.dart';
 import 'package:project_hp/src/utils/functions.dart';
@@ -52,11 +54,11 @@ class AuthController {
             'The account already exists for that email.');
         Logger().e('\n\nThe account already exists for that email.\n\n');
       } else {
-        DialogFuncs.alertDialog(context, 'Error', e.message);
+        DialogFuncs.alertDialog(context, 'Error', e.message.toString());
         Logger().e(e.message);
       }
     } catch (e) {
-      DialogFuncs.alertDialog(context, 'Error', e);
+      DialogFuncs.alertDialog(context, 'Error', e.toString());
       Logger().e(e);
     }
   }
@@ -74,12 +76,21 @@ class AuthController {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('uid', userCredential.user!.uid);
 
+        UserModel userModel =
+            await DatabaseController().getCurrentUserDetails();
+        prefs.setBool('introSeen', userModel.introSeen);
+
         Logger().d('\n\n ${userCredential.user!.uid} - User Logged In! \n\n');
 
         //Navigating...
-        Provider.of<NavigatorProvider>(context, listen: false)
-            .setCurrentScreenIndex(0);
-        NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
+        if (userModel.introSeen) {
+          Provider.of<NavigatorProvider>(context, listen: false)
+              .setCurrentScreenIndex(0);
+          NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
+        } else {
+          prefs.setBool('introSeen', true);
+          NavigatorFuncs.navigateToNoBack(context, IntroScreen());
+        }
 
         //Letting the user know
         DialogFuncs.alertDialog(
@@ -106,11 +117,11 @@ class AuthController {
             'Wrong password provided for that user.');
         Logger().e('\n\n Wrong password provided for that user.\n\n');
       } else {
-        DialogFuncs.alertDialog(context, 'Error', e.message);
+        DialogFuncs.alertDialog(context, 'Error', e.message.toString());
         Logger().e(e.message);
       }
     } catch (e) {
-      DialogFuncs.alertDialog(context, 'Error', e);
+      DialogFuncs.alertDialog(context, 'Error', e.toString());
       Logger().e(e);
     }
   }
@@ -121,6 +132,7 @@ class AuthController {
       //Logics
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('uid', kAnonymous);
+      prefs.setBool('introSeen', true);
 
       //Navigating...
       Provider.of<NavigatorProvider>(context, listen: false)
@@ -153,11 +165,11 @@ class AuthController {
             context, 'No User', 'No user found for that email.');
         Logger().e('\n\n No user found for that email.\n\n');
       } else {
-        DialogFuncs.alertDialog(context, 'Error', e.message);
+        DialogFuncs.alertDialog(context, 'Error', e.message.toString());
         Logger().e(e.message);
       }
     } catch (e) {
-      DialogFuncs.alertDialog(context, 'Error', e);
+      DialogFuncs.alertDialog(context, 'Error', e.toString());
       Logger().e(e);
     }
   }
@@ -168,6 +180,7 @@ class AuthController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString('uid');
     prefs.setString('uid', kAnonymous);
+    prefs.setBool('introSeen', true);
     if (uid != kAnonymous) {
       await DialogFuncs.alertDialog(
           context, 'Success!', 'Log Out Successful! Sad to see you leave!');

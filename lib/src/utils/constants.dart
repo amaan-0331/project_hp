@@ -11,6 +11,9 @@ enum VoteStatus {
 
 const double kDefaultPadding = 15;
 
+//path for image assets
+const String imageAssetpath = 'assets/images/';
+
 //consts for google map camera positionszoom: 17,tilt: 60,
 const double kZoom = 17;
 const double kTilt = 60;

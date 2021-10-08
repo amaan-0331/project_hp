@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:logger/logger.dart';
+import 'package:project_hp/src/components/button/icon_button.dart';
+import 'package:project_hp/src/screens/intro_screen/intro_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:project_hp/src/components/after_list/after_list_elements.dart';
 import 'package:project_hp/src/components/temp_screen/temp_screen.dart';
 import 'package:project_hp/src/components/tile_card/marker_card.dart';
@@ -12,15 +14,20 @@ import 'package:project_hp/src/providers/map_provider/map_screen_provider.dart';
 import 'package:project_hp/src/screens/map_screen/components/home_screen_title.dart';
 import 'package:project_hp/src/utils/constants.dart';
 import 'package:project_hp/src/utils/functions.dart';
-import 'package:provider/provider.dart';
 
-// FIXME: finish this
 class NearByScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: IconOnlyButton(
+            btnIcon: Icon(Icons.help_outline, size: 35),
+            btnFunc: () => NavigatorFuncs.navigateTo(context, IntroScreen()),
+            btnHeight: 20,
+            btnColor: Theme.of(context).colorScheme.secondary),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         body: Column(
           children: [
             HomeScreenTitle(size: size, title: 'Nearby Feed'),
@@ -93,8 +100,6 @@ class _NearByFeedState extends State<NearByFeed> {
                   return listItems[index];
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  Logger()
-                      .d(listItems.length.toString() + ',' + index.toString());
                   if (index == listItems.length - 2) {
                     return (nearbyMarkersCount > 0)
                         ? showAftrerMarkers(context, widget.size)

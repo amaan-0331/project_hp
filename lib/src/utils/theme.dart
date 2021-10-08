@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/src/components/shadow/boxShadow.dart';
+import 'package:project_hp/src/utils/constants.dart';
 
 final ThemeData mainTheme = ThemeData(
   visualDensity: VisualDensity.standard,
@@ -54,9 +55,22 @@ final ThemeData mainTheme = ThemeData(
       fontWeight: FontWeight.w800,
       color: Colors.black,
     ),
+    headline4: TextStyle(
+      fontFamily: 'CarroisGothic',
+      fontSize: 25,
+      fontWeight: FontWeight.w600,
+      shadows: [boxShadowSubtle()],
+    ),
     subtitle1: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
     caption: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
     button: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+  ),
+
+  //Snackbar theme
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: Colors.white70,
+    elevation: kDefaultPadding,
+    behavior: SnackBarBehavior.fixed,
   ),
 
   //Text Input decoration theme

@@ -32,7 +32,7 @@ Column showAftrerMarkers(BuildContext context, Size size) {
         errorBuilder: (context, error, stackTrace) => SizedBox(),
         height: size.height / 2,
         width: size.width / 2,
-        repeat: true,
+        repeat: false,
       ),
     ],
   );

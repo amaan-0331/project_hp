@@ -32,6 +32,11 @@ class DatabaseController {
       if (document.data() != null) {
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
         currentUser = UserModel.fromJson(data);
+        if (data['introSeen'] != null) {
+          currentUser.introSeen = data['introSeen'];
+        } else {
+          currentUser.introSeen = false;
+        }
         if (data['markers'] != null) {
           currentUser.userMarkers = data['markers'];
         }
@@ -107,6 +112,11 @@ class DatabaseController {
         .then((value) => Logger().d("marker Added"))
         .catchError((error) =>
             Logger().e("\n\n\n Failed to add marker: $error \n\n\n\n"));
+  }
+
+  //Function to update intro seen status in user collection
+  void updateIntroStatusInUserData(String uid, bool status) {
+    users.doc(uid).update({'introSeen': status});
   }
 
   //Function to update marker data in user collection

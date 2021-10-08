@@ -9,6 +9,7 @@ import 'package:project_hp/src/screens/account_screen/components/account_screen_
 import 'package:project_hp/src/screens/account_screen/downvoted_markers_screen.dart';
 import 'package:project_hp/src/screens/account_screen/user_markers_screen.dart';
 import 'package:project_hp/src/screens/account_screen/upvoted_markers_screen.dart';
+import 'package:project_hp/src/screens/intro_screen/intro_screen.dart';
 import 'package:project_hp/src/utils/constants.dart';
 import 'package:project_hp/src/utils/functions.dart';
 
@@ -25,7 +26,6 @@ class AccountScreen extends StatelessWidget {
           'User Account',
           style: Theme.of(context).textTheme.headline2,
         ),
-        // centerTitle: true,
       ),
       body: FutureBuilder<UserModel>(
         future: DatabaseController().getCurrentUserDetails(),
@@ -133,6 +133,12 @@ class UserAccountContent extends StatelessWidget {
                 content: 'Downvoted Markers',
                 function: () => NavigatorFuncs.navigateTo(
                     context, DownvotedMarkers(user: user)),
+                size: size,
+              ),
+              TagListCard(
+                content: 'How to use?',
+                function: () =>
+                    NavigatorFuncs.navigateTo(context, IntroScreen()),
                 size: size,
               ),
               TagListCard(

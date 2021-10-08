@@ -7,9 +7,24 @@ import 'package:project_hp/src/utils/constants.dart';
 class DialogFuncs {
   //Snack message function
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackMsg(
-      BuildContext context, String message) {
+    BuildContext context,
+    String message,
+  ) {
     return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+      SnackBar(
+        content: Text(
+          message,
+          style: Theme.of(context)
+              .textTheme
+              .subtitle1!
+              .copyWith(fontSize: 20, color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        duration: Duration(seconds: 4),
+        dismissDirection: DismissDirection.horizontal,
+        padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+        backgroundColor: Theme.of(context).hintColor,
+      ),
     );
   }
 
@@ -17,7 +32,7 @@ class DialogFuncs {
   static Future<String?> alertDialog(
     BuildContext context,
     String title,
-    description,
+    String description,
   ) {
     return showDialog<String>(
       context: context,
@@ -38,8 +53,8 @@ class DialogFuncs {
   static Future<String?> alertDialogWithBtn(
     BuildContext context,
     String title,
-    description,
-    btnText,
+    String description,
+    String btnText,
     Function func,
   ) {
     return showDialog<String>(
@@ -99,9 +114,9 @@ class DialogFuncs {
   static Future<String?> alertDialogWithTextFields(
     BuildContext context,
     String title,
-    description,
+    String description,
     TextEditingController titleController,
-    snippetController,
+    TextEditingController snippetController,
   ) {
     return showDialog<String>(
       context: context,

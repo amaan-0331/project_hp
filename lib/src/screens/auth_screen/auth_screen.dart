@@ -27,7 +27,7 @@ class _AuthScreenState extends State<AuthScreen> {
           children: [
             BackgroundImage(
               size: size,
-              imgUrl: 'assets/images/background1.jpg',
+              imgUrl: '${imageAssetpath}background1.jpg',
             ),
             AuthFields(nextScreen: widget.userSelection, size: size)
           ],

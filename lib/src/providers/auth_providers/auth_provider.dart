@@ -62,11 +62,11 @@ class SignUpProvider extends AuthProvider {
       await AuthController(context)
           .registerUser(_email.text, _password.text, _name.text);
       setLoading(false);
-      DialogFuncs.snackMsg(context, 'Successful Sign Up!');
+      //DialogFuncs.snackMsg(context, 'Successful Sign Up!');
     } else {
       setLoading(false);
       DialogFuncs.alertDialog(context, 'Fill Details', 'Fill all the Details');
-      DialogFuncs.snackMsg(context, 'Fill the necessary details properly!');
+      //DialogFuncs.snackMsg(context, 'Fill the necessary details properly!');
     }
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:project_hp/src/controllers/database_controller.dart';
 import 'package:project_hp/src/providers/map_provider/location_provider.dart';
 import 'package:project_hp/src/screens/auth_screen/welcome_screen.dart';
+import 'package:project_hp/src/screens/intro_screen/intro_screen.dart';
 import 'package:project_hp/src/screens/map_screen/map_screen.dart';
 import 'package:project_hp/src/screens/screen_navigator/bottom_navigator.dart';
 import 'package:project_hp/src/utils/constants.dart';
@@ -30,17 +32,29 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!prefs.containsKey('uid')) {
       prefs.setString('uid', kAnonymous);
     }
+    if (!prefs.containsKey('introSeen')) {
+      prefs.setBool('introSeen', false);
+    }
     Logger()
         .d('uid from splashscreen preference is ' + prefs.getString('uid')!);
     Future.delayed(
       Duration(seconds: 1),
-      prefs.getString('uid') != kAnonymous
-          ? () => NavigatorFuncs.navigateToNoBack(context, BottomNavigator())
-          : () => NavigatorFuncs.navigateToNoBack(context, WelcomeScreen()),
+      (prefs.getString('uid') == kAnonymous)
+          ? () => NavigatorFuncs.navigateToNoBack(context, WelcomeScreen())
+          : (prefs.getBool('introSeen') == true)
+              ? () =>
+                  NavigatorFuncs.navigateToNoBack(context, BottomNavigator())
+              : () {
+                  DatabaseController().updateIntroStatusInUserData(
+                      prefs.getString('uid')!, true);
+                  prefs.setBool('introSeen', true);
+                  NavigatorFuncs.navigateToNoBack(context, IntroScreen());
+                },
+      // () => NavigatorFuncs.navigateToNoBack(context, BottomNavigator()),
     );
   }
 
-  //won't be necessary at the end
+  //won't be necessary at the end //REMOVE: by end
   Future<void> navigateToHome() async {
     Logger().i('patangatta');
     await Provider.of<LocationProvider>(context, listen: false)
@@ -61,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/logo.png',
+              '${imageAssetpath}logo.png',
               height: size.height / 4,
             ),
             SizedBox(height: size.height / 10),

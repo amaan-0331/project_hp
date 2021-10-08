@@ -14,11 +14,13 @@ class HomeScreenTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: EdgeInsets.only(
-            top: kDefaultPadding * 2, left: kDefaultPadding * 1.5),
-        width: size.width,
-        child: Text(title, style: Theme.of(context).textTheme.headline6),
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.only(
+              top: kDefaultPadding * 2, left: kDefaultPadding * 1.5),
+          width: size.width,
+          child: Text(title, style: Theme.of(context).textTheme.headline6),
+        ),
       ),
     );
   }
