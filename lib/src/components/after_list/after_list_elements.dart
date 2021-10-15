@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:project_hp/src/components/button/text_button.dart';
 import 'package:project_hp/src/utils/constants.dart';
 
-Column showNoMarkers(BuildContext context, Size size, String content) {
+Column showNoMarkers(
+  BuildContext context,
+  Size size,
+  String content,
+  String btnText,
+  Function() btnFunc,
+) {
   return Column(
     children: [
-      SizedBox(
-        height: size.height / 4,
-      ),
-      Lottie.network(
-        'https://assets3.lottiefiles.com/private_files/lf30_bn5winlb.json',
+      SizedBox(height: size.height / 4),
+      Lottie.asset(
+        'assets/lottie/empty.json',
         errorBuilder: (context, error, stackTrace) => SizedBox(),
         width: size.width / 1.5,
       ),
@@ -17,8 +22,13 @@ Column showNoMarkers(BuildContext context, Size size, String content) {
       Text(
         content,
         textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headline3,
       ),
+      TextOnlyButton(
+        btnText: btnText,
+        btnFunc: btnFunc,
+      ),
+      SizedBox(height: size.height / 4),
     ],
   );
 }
@@ -26,12 +36,11 @@ Column showNoMarkers(BuildContext context, Size size, String content) {
 Column showAftrerMarkers(BuildContext context, Size size) {
   return Column(
     children: [
-      // SizedBox(height: size.height / 10),
-      Lottie.network(
-        'https://assets1.lottiefiles.com/private_files/lf30_z1sghrbu.json',
+      SizedBox(height: size.height / 10),
+      Lottie.asset(
+        'assets/lottie/done.json',
         errorBuilder: (context, error, stackTrace) => SizedBox(),
-        height: size.height / 2,
-        width: size.width / 2,
+        width: size.width / 1.5,
         repeat: false,
       ),
     ],

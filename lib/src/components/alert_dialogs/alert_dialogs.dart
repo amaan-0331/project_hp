@@ -41,7 +41,7 @@ class DialogFuncs {
         content: Text(description),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
             child: Text('Ok'),
           ),
         ],
@@ -66,7 +66,7 @@ class DialogFuncs {
           TextButton(
             onPressed: () {
               func();
-              Navigator.pop(context);
+              Navigator.of(context, rootNavigator: true).pop();
             },
             child: Text(btnText),
           ),
@@ -94,14 +94,14 @@ class DialogFuncs {
           TextButton(
             onPressed: () {
               func1();
-              Navigator.pop(context);
+              Navigator.of(context, rootNavigator: true).pop();
             },
             child: Text(btnText1),
           ),
           TextButton(
             onPressed: () {
               func2();
-              Navigator.pop(context);
+              Navigator.of(context, rootNavigator: true).pop();
             },
             child: Text(btnText2),
           ),
@@ -145,7 +145,7 @@ class DialogFuncs {
         ),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
             child: Text('Ok'),
           ),
         ],
@@ -243,7 +243,7 @@ class DialogFuncs {
         content: description,
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
             child: Text('Ok'),
           ),
         ],

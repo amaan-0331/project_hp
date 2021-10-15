@@ -85,7 +85,7 @@ class AuthController {
         //Navigating...
         if (userModel.introSeen) {
           Provider.of<NavigatorProvider>(context, listen: false)
-              .setCurrentScreenIndex(0);
+              .setCurrentScreenIndex(1);
           NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
         } else {
           prefs.setBool('introSeen', true);
@@ -136,7 +136,7 @@ class AuthController {
 
       //Navigating...
       Provider.of<NavigatorProvider>(context, listen: false)
-          .setCurrentScreenIndex(0);
+          .setCurrentScreenIndex(1);
       NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
 
       //Letting the user know

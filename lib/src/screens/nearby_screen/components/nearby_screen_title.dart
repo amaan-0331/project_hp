@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_hp/src/utils/constants.dart';
 
-class HomeScreenTitle extends StatelessWidget {
-  const HomeScreenTitle({
+class NearbyScreenTitle extends StatelessWidget {
+  const NearbyScreenTitle({
     Key? key,
     required this.size,
     required this.title,
@@ -16,8 +16,7 @@ class HomeScreenTitle extends StatelessWidget {
     return Expanded(
       child: Center(
         child: Container(
-          padding: EdgeInsets.only(
-              top: kDefaultPadding * 2, left: kDefaultPadding * 1.5),
+          padding: EdgeInsets.only(top: kDefaultPadding * 2, left: kDefaultPadding * 1.5),
           width: size.width,
           child: Text(title, style: Theme.of(context).textTheme.headline6),
         ),

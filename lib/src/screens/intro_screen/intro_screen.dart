@@ -20,7 +20,7 @@ class _IntroScreenState extends State<IntroScreen> {
     super.initState();
 
     Future.delayed(
-      Duration(seconds: 1),
+      Duration(seconds: 0),
       () => DialogFuncs.snackMsg(context, 'Swipe for more!'),
     );
   }
@@ -62,8 +62,7 @@ class _IntroScreenState extends State<IntroScreen> {
     return Scaffold(
       floatingActionButton: MainButton(
         btnText: btnText,
-        btnFunc: () =>
-            NavigatorFuncs.navigateToNoBack(context, BottomNavigator()),
+        btnFunc: () => NavigatorFuncs.navigateToNoBack(context, BottomNavigator()),
         btnWidth: size.width / 4,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

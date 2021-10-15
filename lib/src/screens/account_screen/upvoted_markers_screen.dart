@@ -6,6 +6,7 @@ import 'package:project_hp/src/controllers/database_controller.dart';
 import 'package:project_hp/src/models/map_marker_model.dart';
 import 'package:project_hp/src/models/user_model.dart';
 import 'package:project_hp/src/providers/map_provider/location_provider.dart';
+import 'package:project_hp/src/providers/navigator_provider/navigator_provider.dart';
 import 'package:project_hp/src/utils/functions.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +19,7 @@ class UpvotedMarkers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    Position _currentLoc =
-        Provider.of<LocationProvider>(context).getCurrentLocation;
+    Position _currentLoc = Provider.of<LocationProvider>(context).getCurrentLocation;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -27,7 +27,7 @@ class UpvotedMarkers extends StatelessWidget {
           style: Theme.of(context).textTheme.headline2,
         ),
         leading: IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
             icon: Icon(Icons.arrow_back)),
       ),
       body: ListView.builder(
@@ -37,23 +37,30 @@ class UpvotedMarkers extends StatelessWidget {
           if (index == user.upVotedlist.length) {
             return (user.upVotedlist.length == 0)
                 ? showNoMarkers(
-                    context, size, 'You Haven\'t Shared any Tags yet!')
+                    context,
+                    size,
+                    'You can Upvote your \nFavorite tags!',
+                    'Start Upvoting! 😇',
+                    () {
+                      Provider.of<NavigatorProvider>(context, listen: false)
+                          .setCurrentScreenIndex(1);
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  )
                 : showAftrerMarkers(context, size);
           }
           return FutureBuilder<MarkerModel?>(
-            future: DatabaseController()
-                .getCurrentMarkerDetails(user.upVotedlist[index]),
+            future: DatabaseController().getCurrentMarkerDetails(user.upVotedlist[index]),
             builder: (context, snapshot) {
               MarkerModel? marker = snapshot.data;
               if (snapshot.hasData) {
-                double proximity =
-                    MarkerViewFuncs().proximityFinder(_currentLoc, marker!);
+                double proximity = MarkerViewFuncs().proximityFinder(_currentLoc, marker!);
                 return MarkerCard(
                   marker: marker,
                   proximity: proximity,
                   function: () {
                     MarkerViewFuncs().openInMapMethod(context, marker);
-                    Navigator.pop(context);
+                    Navigator.of(context, rootNavigator: true).pop();
                   },
                 );
               } else {

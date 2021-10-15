@@ -4,7 +4,7 @@ import 'package:project_hp/src/screens/nearby_screen/nearby_screen.dart';
 import 'package:project_hp/src/screens/map_screen/map_screen.dart';
 
 class NavigatorProvider extends ChangeNotifier {
-  int _currentScreenIndex = 0;
+  int _currentScreenIndex = 1;
   static List<Widget> _screenOptions = [
     NearByScreen(),
     MapScreen(),

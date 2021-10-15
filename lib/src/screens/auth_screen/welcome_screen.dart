@@ -29,8 +29,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Lottie.network(
-              'https://assets4.lottiefiles.com/packages/lf20_veqkjqvf.json',
+            Lottie.asset(
+              'assets/lottie/traveler.json',
               errorBuilder: (context, error, stackTrace) => SizedBox(),
               repeat: true,
               animate: true,
@@ -53,14 +53,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     tagName: 'logInBtn',
                     btnText: 'Log In',
                     btnWidth: size.width * 2 / 5,
-                    btnFunc: () => NavigatorFuncs.navigateTo(context,
-                        AuthScreen(userSelection: Screens.logInScreen))),
+                    btnFunc: () => NavigatorFuncs.navigateTo(
+                        context, AuthScreen(userSelection: Screens.logInScreen))),
                 MainButton(
                     tagName: 'signUpBtn',
                     btnText: 'Sign Up',
                     btnWidth: size.width * 2 / 5,
-                    btnFunc: () => NavigatorFuncs.navigateTo(context,
-                        AuthScreen(userSelection: Screens.signUpScreen))),
+                    btnFunc: () => NavigatorFuncs.navigateTo(
+                        context, AuthScreen(userSelection: Screens.signUpScreen))),
               ],
             ),
             SizedBox(height: kDefaultPadding),
@@ -71,9 +71,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     : SecondaryButton(
                         size: size,
                         btnText: 'Guest Mode',
-                        btnFunc: () =>
-                            Provider.of<AuthProvider>(context, listen: false)
-                                .startAnonymousLogin(context),
+                        btnFunc: () => Provider.of<AuthProvider>(context, listen: false)
+                            .startAnonymousLogin(context),
                       );
               },
             ),

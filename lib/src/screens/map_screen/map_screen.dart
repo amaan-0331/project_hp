@@ -21,8 +21,7 @@ class _MapScreenState extends State<MapScreen> {
   Completer<GoogleMapController> _controller = Completer();
   @override
   Widget build(BuildContext context) {
-    Position _currentLoc =
-        Provider.of<LocationProvider>(context).getCurrentLocation;
+    Position _currentLoc = Provider.of<LocationProvider>(context).getCurrentLocation;
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -40,8 +39,7 @@ class _MapScreenState extends State<MapScreen> {
 
               snapshot.data!.docs.forEach(
                 (DocumentSnapshot document) {
-                  DatabaseController()
-                      .processDataFromStreambuilder(context, document);
+                  DatabaseController().processDataFromStreambuilder(context, document);
                 },
               );
 

@@ -17,7 +17,7 @@ class TextOnlyButton extends StatelessWidget {
         tag: tagName,
         child: Center(
           child: TextButton(
-            child: Text(btnText),
+            child: Text(btnText, textAlign: TextAlign.center),
             onPressed: btnFunc,
           ),
         ));
