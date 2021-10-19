@@ -3,6 +3,8 @@ enum Screens {
   signUpScreen,
   forgotPasswordScreen,
 }
+
+//vote statuses for a geotag marker
 enum VoteStatus {
   upvoted,
   notVoted,
@@ -19,7 +21,7 @@ const double kZoom = 17;
 const double kTilt = 60;
 
 //constant distance for checking distance
-const double kCheckDistance = 4000;
+const double kCheckDistance = 5000;
 
 //constant name for anonymous user
 const String kAnonymous = 'anonymous';

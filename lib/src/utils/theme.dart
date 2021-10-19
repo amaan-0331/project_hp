@@ -76,16 +76,13 @@ final ThemeData mainTheme = ThemeData(
   //Text Input decoration theme
   inputDecorationTheme: InputDecorationTheme(
     contentPadding: EdgeInsets.symmetric(horizontal: 15),
-    labelStyle:
-        TextStyle(color: Color(0xff000000), fontWeight: FontWeight.bold),
+    labelStyle: TextStyle(color: Color(0xff000000), fontWeight: FontWeight.bold),
     filled: false,
     errorStyle: TextStyle(color: Colors.red, fontSize: 13),
     focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: BorderSide(color: Colors.transparent)),
+        borderRadius: BorderRadius.circular(15), borderSide: BorderSide(color: Colors.transparent)),
     enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: BorderSide(color: Colors.transparent)),
+        borderRadius: BorderRadius.circular(15), borderSide: BorderSide(color: Colors.transparent)),
   ),
 
   //Alert dialog decoration/style theme

@@ -62,7 +62,10 @@ class _IntroScreenState extends State<IntroScreen> {
     return Scaffold(
       floatingActionButton: MainButton(
         btnText: btnText,
-        btnFunc: () => NavigatorFuncs.navigateToNoBack(context, BottomNavigator()),
+        btnFunc: () {
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
+        },
         btnWidth: size.width / 4,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -1,6 +1,7 @@
 # project_hp
 
 A top secret project
+Final Year Project for Team B
 
 ## Getting Started
 

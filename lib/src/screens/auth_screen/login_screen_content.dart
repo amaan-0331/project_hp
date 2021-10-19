@@ -73,7 +73,7 @@ class _LogInScreenContentState extends State<LogInScreenContent> {
               TextOnlyButton(
                 tagName: 'forgotPasswordBtn',
                 btnFunc: () {
-                  Logger().wtf('Dude forgot the password!!! ;))');
+                  Logger().wtf('forgot the password');
                   NavigatorFuncs.navigateToNoBack(context,
                       AuthScreen(userSelection: Screens.forgotPasswordScreen));
                 },

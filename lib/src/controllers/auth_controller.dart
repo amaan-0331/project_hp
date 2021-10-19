@@ -55,11 +55,11 @@ class AuthController {
         Logger().e('\n\nThe account already exists for that email.\n\n');
       } else {
         DialogFuncs.alertDialog(context, 'Error', e.message.toString());
-        Logger().e(e.message);
+        Logger().e(e.message.toString());
       }
     } catch (e) {
       DialogFuncs.alertDialog(context, 'Error', e.toString());
-      Logger().e(e);
+      Logger().e(e.toString());
     }
   }
 
@@ -85,7 +85,7 @@ class AuthController {
         //Navigating...
         if (userModel.introSeen) {
           Provider.of<NavigatorProvider>(context, listen: false)
-              .setCurrentScreenIndex(1);
+              .setCurrentScreenIndex(0);
           NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
         } else {
           prefs.setBool('introSeen', true);
@@ -108,21 +108,24 @@ class AuthController {
         await FirebaseAuth.instance.signOut();
       }
     } on FirebaseAuthException catch (e) {
+      //letting the user know if email is not registered
       if (e.code == 'user-not-found') {
         DialogFuncs.alertDialog(
             context, 'No User', 'No user found for that email.');
         Logger().e('\n\n No user found for that email.\n\n');
-      } else if (e.code == 'wrong-password') {
+      }
+      //letting the user know if the password is wrong
+      else if (e.code == 'wrong-password') {
         DialogFuncs.alertDialog(context, 'Wrong password',
             'Wrong password provided for that user.');
         Logger().e('\n\n Wrong password provided for that user.\n\n');
       } else {
         DialogFuncs.alertDialog(context, 'Error', e.message.toString());
-        Logger().e(e.message);
+        Logger().e(e.message.toString());
       }
     } catch (e) {
       DialogFuncs.alertDialog(context, 'Error', e.toString());
-      Logger().e(e);
+      Logger().e(e.toString());
     }
   }
 
@@ -136,7 +139,7 @@ class AuthController {
 
       //Navigating...
       Provider.of<NavigatorProvider>(context, listen: false)
-          .setCurrentScreenIndex(1);
+          .setCurrentScreenIndex(0);
       NavigatorFuncs.navigateToNoBack(context, BottomNavigator());
 
       //Letting the user know
@@ -149,7 +152,7 @@ class AuthController {
     }
   }
 
-  //Function to send password reset email
+//Function to send password reset email
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       //logic
@@ -166,11 +169,11 @@ class AuthController {
         Logger().e('\n\n No user found for that email.\n\n');
       } else {
         DialogFuncs.alertDialog(context, 'Error', e.message.toString());
-        Logger().e(e.message);
+        Logger().e(e.message.toString());
       }
     } catch (e) {
       DialogFuncs.alertDialog(context, 'Error', e.toString());
-      Logger().e(e);
+      Logger().e(e.toString());
     }
   }
 

@@ -71,25 +71,6 @@ class MapScreenProvider extends ChangeNotifier {
     mapController!.animateCamera(CameraUpdate.newCameraPosition(camPos));
   }
 
-  //getting markers from database //not being used //could be used
-  // Future<void> getMarkersFromDatabase(
-  //   DocumentSnapshot document,
-  //   BuildContext context,
-  // ) async {
-  //   Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-  //   MarkerModel model = MarkerModel(
-  //     markerId: document.id,
-  //     uid: data['uid'],
-  //     latitude: data['latitude'],
-  //     longitude: data['longitude'],
-  //     title: data['infoTitle'],
-  //     snippet: data['infoSnippet'],
-  //   );
-  //   await addMarkerToSet(model);
-  //   notifyListeners();
-  //   Logger().i('New Location ${document.id} Created!');
-  // }
-
   //save user selection --> long press function
   Future<void> saveMarker(LatLng userPosition, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -64,8 +64,8 @@ class DatabaseController {
       upVoterslist: [],
     );
     DocumentSnapshot document = await markers.doc(markerId).get();
-    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
     if (document.data() != null) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
       currentMarker.uid = data['uid'];
       currentMarker.title = data['title'];
       currentMarker.snippet = data['snippet'];
@@ -92,8 +92,8 @@ class DatabaseController {
           'email': email,
         })
         .then((value) => Logger().d("User Added"))
-        .catchError(
-            (error) => Logger().e("\n\n\n Failed to add user: $error \n\n\n"));
+        .catchError((error) => Logger()
+            .e("\n\n\n Failed to add user: ${error.toString()} \n\n\n"));
   }
 
   //Function to save marker data
@@ -110,8 +110,8 @@ class DatabaseController {
           'uid': markerModel.uid,
         })
         .then((value) => Logger().d("marker Added"))
-        .catchError((error) =>
-            Logger().e("\n\n\n Failed to add marker: $error \n\n\n\n"));
+        .catchError((error) => Logger()
+            .e("\n\n\n Failed to add marker: ${error.toString()} \n\n\n\n"));
   }
 
   //Function to update intro seen status in user collection

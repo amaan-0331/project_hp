@@ -12,7 +12,6 @@ import 'package:project_hp/src/components/tile_card/marker_card.dart';
 import 'package:project_hp/src/controllers/database_controller.dart';
 import 'package:project_hp/src/models/map_marker_model.dart';
 import 'package:project_hp/src/providers/map_provider/location_provider.dart';
-import 'package:project_hp/src/providers/map_provider/map_screen_provider.dart';
 import 'package:project_hp/src/utils/constants.dart';
 import 'package:project_hp/src/utils/functions.dart';
 
@@ -55,68 +54,69 @@ class NearByFeed extends StatefulWidget {
 class _NearByFeedState extends State<NearByFeed> {
   @override
   Widget build(BuildContext context) {
-    Position _currentLoc = Provider.of<LocationProvider>(context).getCurrentLocation;
-    return Consumer<MapScreenProvider>(
-      builder: (context, value, child) {
-        return Container(
-          height: widget.size.height * 0.75,
-          child: StreamBuilder<QuerySnapshot>(
-            stream: DatabaseController().markerStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return TempScreen(size: widget.size, message: 'Something went wrong');
+    Position _currentLoc =
+        Provider.of<LocationProvider>(context).getCurrentLocation;
+    return Container(
+      height: widget.size.height * 0.75,
+      child: StreamBuilder<QuerySnapshot>(
+        stream: DatabaseController().markerStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return TempScreen(
+                size: widget.size, message: 'Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return TempScreen(size: widget.size, message: "Loading");
+          }
+          int nearbyMarkersCount = 0;
+          List<Widget> listItems = [];
+          listItems.addAll(snapshot.data!.docs.map(
+            (DocumentSnapshot document) {
+              MarkerModel currentMarker = DatabaseController()
+                  .processDataFromStreambuilder(context, document);
+              double proximity =
+                  MarkerViewFuncs().proximityFinder(_currentLoc, currentMarker);
+              if (proximity < kCheckDistance) {
+                nearbyMarkersCount++;
+                return MarkerCard(
+                  marker: currentMarker,
+                  proximity: proximity,
+                  function: () =>
+                      MarkerViewFuncs().openInMapMethod(context, currentMarker),
+                );
+              } else {
+                return SizedBox();
               }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return TempScreen(size: widget.size, message: "Loading");
-              }
-              int nearbyMarkersCount = 0;
-              List<Widget> listItems = [];
-              listItems.addAll(snapshot.data!.docs.map(
-                (DocumentSnapshot document) {
-                  MarkerModel currentMarker =
-                      DatabaseController().processDataFromStreambuilder(context, document);
-                  double proximity = MarkerViewFuncs().proximityFinder(_currentLoc, currentMarker);
-                  if (proximity < kCheckDistance) {
-                    nearbyMarkersCount++;
-                    return MarkerCard(
-                      marker: currentMarker,
-                      proximity: proximity,
-                      function: () => MarkerViewFuncs().openInMapMethod(context, currentMarker),
-                    );
-                  } else {
-                    return SizedBox();
-                  }
-                },
-              ).toList());
-              listItems.add(SizedBox());
-
-              return ListView.separated(
-                itemCount: listItems.length,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return listItems[index];
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  if (index == listItems.length - 2) {
-                    return (nearbyMarkersCount > 0)
-                        ? showAftrerMarkers(context, widget.size)
-                        : showNoMarkers(
-                            context,
-                            widget.size,
-                            'No Tags Near You!',
-                            'Start Sharing!',
-                            () => Provider.of<NavigatorProvider>(context, listen: false)
-                                .setCurrentScreenIndex(1),
-                          );
-                  } else {
-                    return SizedBox();
-                  }
-                },
-              );
             },
-          ),
-        );
-      },
+          ).toList());
+          listItems.add(SizedBox());
+
+          return ListView.separated(
+            itemCount: listItems.length,
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return listItems[index];
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              if (index == listItems.length - 2) {
+                return (nearbyMarkersCount > 0)
+                    ? showAftrerMarkers(context, widget.size)
+                    : showNoMarkers(
+                        context,
+                        widget.size,
+                        'No Tags Near You!',
+                        'Start Sharing!',
+                        () => Provider.of<NavigatorProvider>(context,
+                                listen: false)
+                            .setCurrentScreenIndex(1),
+                      );
+              } else {
+                return SizedBox();
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }

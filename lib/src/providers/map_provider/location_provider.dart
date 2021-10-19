@@ -77,7 +77,7 @@ class LocationProvider extends ChangeNotifier {
     }
 
     // continue accessing the position of the device.
-    Logger().i('Permission Labuna brooooo');
+    Logger().i('Permission Received');
 
     Position val = await Geolocator.getCurrentPosition();
     setCurrentLocation(val);
