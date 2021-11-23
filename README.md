@@ -1,17 +1,53 @@
-# project_hp
+### PROJECT APIYAMU
 
-A top secret project
-Final Year Project for Team B
+### A Mobile App for sharing temporary tags among tourists.
 
-## Getting Started
+## Links
 
-This project is a starting point for a Flutter application.
+- [Repo](https://github.com/amaan-0331/project_hp "PROJECT APIYAMU Repo")
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![Welcome Page](/screenshots/1.png "Home Page")
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Nearby Feed](/screenshots/2.png "Nearby Feed")
+
+![Explore Feed](/screenshots/3.png "Explore Feed")
+
+![Adding Tags](/screenshots/4.png "Adding Tags")
+
+![Vote Screen with Upvoted](/screenshots/5.png "Vote Screen with Upvoted")
+
+![Vote Screen with Downvoted](/screenshots/6.png "Vote Screen with Downvoted")
+
+![Account Screen](/screenshots/7.png "Account Screen")
+
+![Anonymous Account Screen](/screenshots/8.png "Anonymous Account Screen")
+
+![Login Screen](/screenshots/9.png "Login Screen")
+
+![Signup Screen](/screenshots/10.png "Signup Screen")
+
+![Forgot Password Screen](/screenshots/11.png "Forgot Password Screen")
+
+## Built With
+
+- FLUTTER
+- DART
+- FIREBASE
+
+## Future Updates
+
+- [ ] iOS Deployment
+
+## Author
+
+**Amaan Ansari**
+
+- [Github](https://github.com/rohit19060 "Amaan Ansari")
+- [LinkedIn](https://www.linkedin.com/in/amaan-ansari-0331/ "")
+- [Email](mailto:masteramaan0331@gmail.com?subject=Hi "Hi!")
+
+## 🤝 Support
+
+Give a ⭐️ if you like this project!
