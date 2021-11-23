@@ -6,6 +6,24 @@
 
 - [Repo](https://github.com/amaan-0331/project_hp "PROJECT APIYAMU Repo")
 
+## Built With
+
+- FLUTTER
+- DART
+- FIREBASE
+
+## Future Updates
+
+- [ ] iOS Deployment
+
+## Author
+
+**Amaan Ansari**
+
+- [Github](https://github.com/rohit19060 "Amaan Ansari")
+- [LinkedIn](https://www.linkedin.com/in/amaan-ansari-0331/ "")
+- [Email](mailto:masteramaan0331@gmail.com?subject=Hi "Hi!")
+
 ## Screenshots
 
 ![Welcome Page](/screenshots/1.png "Home Page")
@@ -29,24 +47,6 @@
 ![Signup Screen](/screenshots/10.png "Signup Screen")
 
 ![Forgot Password Screen](/screenshots/11.png "Forgot Password Screen")
-
-## Built With
-
-- FLUTTER
-- DART
-- FIREBASE
-
-## Future Updates
-
-- [ ] iOS Deployment
-
-## Author
-
-**Amaan Ansari**
-
-- [Github](https://github.com/rohit19060 "Amaan Ansari")
-- [LinkedIn](https://www.linkedin.com/in/amaan-ansari-0331/ "")
-- [Email](mailto:masteramaan0331@gmail.com?subject=Hi "Hi!")
 
 ## 🤝 Support
 
