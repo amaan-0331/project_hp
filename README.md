@@ -20,7 +20,7 @@
 
 **Amaan Ansari**
 
-- [Github](https://github.com/rohit19060 "Amaan Ansari")
+- [Github](https://github.com/amaan-0331/ "Amaan Ansari")
 - [LinkedIn](https://www.linkedin.com/in/amaan-ansari-0331/ "")
 - [Email](mailto:masteramaan0331@gmail.com?subject=Hi "Hi!")
 
