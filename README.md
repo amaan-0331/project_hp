@@ -1,5 +1,5 @@
 # project_hp
-<h1 align="center"><project-name></h1>
+
 A top secret project
 Final Year Project for Team B
 
